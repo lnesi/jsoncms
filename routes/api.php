@@ -19,3 +19,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::resource('partners', PartnerController::class,['except' => ['create', 'edit']]);
 Route::resource('audiences', AudienceController::class,['except' => ['create', 'edit']]);
+Route::resource('regions', RegionController::class,['except' => ['create', 'edit']]);
+Route::resource('campaings', CampaignController::class,['except' => ['create', 'edit']]);
+Route::resource('banners', BannerController::class,['except' => ['create', 'edit']]);
+//Read Only Resources
+Route::resource('sizes', SizeController::class,['only' => [ 'index','show']]);
+Route::resource('types', TypeController::class,['only' => [ 'index','show']]);
+Route::resource('components', ComponentController::class,['only' => [ 'index','show']]);
+Route::resource('countries', CountryController::class,['only' => [ 'index','show']]);
+Route::resource('languages', LanguageController::class,['only' => [ 'index','show']]);

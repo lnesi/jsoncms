@@ -12,7 +12,8 @@ class Banner extends Model
     protected $table = 'banners';
     protected $dates = ['deleted_at','created_at','updated_at','published_at'];
     protected $fillable=['name'];
-
+    protected $with=['status','type','partner','country','region','language','size','audience'];
+    protected $hidden=['partner_id','country_id','region_id','language_id','size_id','audience_id','status_id','type_id'];
     public static function boot(){
       parent::boot();
       Banner::observe(new BannerObserver());

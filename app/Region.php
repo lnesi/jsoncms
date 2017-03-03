@@ -11,7 +11,9 @@ class Region extends Model
     use SoftDeletes;
     protected $table = 'regions';
     protected $dates = ['deleted_at','created_at','updated_at'];
-    protected $fillable = ['name','abbr'];
+    protected $fillable = ['name','abbr','partner_id'];
+    protected $with=['partner','countries'];
+    protected $hidden=['partner_id'];
     public function partner(){
     	return $this->belongsTo(Partner::class);
     }
