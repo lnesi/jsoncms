@@ -8,7 +8,7 @@
 <h3>License</h3>
 <p>The JSON Dynamic Content Delivery is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).</p>
 <hr>
-<h2>Made With:</h2>
+<h3>Made With:</h3>
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 <h4>Laravel License</h4>
 <p>The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).</p>
