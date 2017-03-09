@@ -18,6 +18,15 @@ require('bootstrap-sass');
  */
 
 window.Vue = require('vue');
+window.VueResource = require('vue-resource');
+
+import VeeValidate from 'vee-validate';
+import VueRouter from 'vue-router';
+window.VeeValidate=VeeValidate;
+window.VueRouter=VueRouter;
+
+
+
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -26,6 +35,8 @@ window.Vue = require('vue');
  */
 
 window.axios = require('axios');
+
+
 
 window.axios.defaults.headers.common = {
     'X-CSRF-TOKEN': window.Laravel.csrfToken,

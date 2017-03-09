@@ -6,6 +6,9 @@
  */
 
 require('./bootstrap');
+Vue.use(VeeValidate);
+Vue.use(VueResource);
+Vue.use(VueRouter);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -14,7 +17,24 @@ require('./bootstrap');
  */
 
 Vue.component('example', require('./components/Example.vue'));
+Vue.component('modal', require('./components/Modal.vue'));
+
+const Home = require('./components/pages/Home.vue');
+const Partners = require('./components/pages/Partners.vue');
+const EditPartner = require('./components/pages/EditPartner.vue');
+
+const routeList = [
+  { path: '/', component: Home },
+  { path: '/partners', component: Partners },
+  { path: '/partners/:id', component: EditPartner }
+]
+
+const router = new VueRouter({
+  routes:routeList
+});
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    component:["modal"],
+    router:router
 });
