@@ -26,7 +26,7 @@
                               <td>
                                    <div class="btn-group btn-group-xs" role="group" aria-label="...">
                                       <a class="btn btn-default" :href="'#partners/'+item.id" ><i class="fa fa-fw fa-edit"></i> Edit</a>
-                                      <button type="button" class="btn btn-default" @click="deletePartner(item.id)"><i class="fa fa-fw fa-trash"></i> Delete</button>
+                                      <button type="button" class="btn btn-default" @click="deletePartner(item)"><i class="fa fa-fw fa-trash"></i> Delete</button>
                                    </div>
                               </td>
                           </tr>
@@ -66,8 +66,13 @@
 
         mounted() {
             this.provider = this.$resource('api/partners{/id}');
+            this.$on('OK_TO_DELETE',function(){
+              if(this.toDelete!=null){
+                this.delete(this.toDelete.id);
+                this.toDelete=null;
+              }
+            }.bind(this));
             this.load();
-            console.log('Partners');
         },
         
         data:function(){
@@ -76,35 +81,46 @@
                 addObject:{
                     name:"",
                     abbr:""
-                }
+                },
+                toDelete:null
             }
         },
 
         methods:{
             
             load(){
+                this.$parent.$emit("SHOW_PRELOADER");
                 this.provider.get().then(response=>{
                     this.list=response.body.data;
+                    this.$parent.$emit("HIDE_PRELOADER");
                 });
             },
 
             add(){
+                this.$parent.$emit("SHOW_PRELOADER");
                 this.provider.save(this.addObject).then(response=>{
+                    this.$parent.$emit("HIDE_PRELOADER");
                     this.load();
+                    this.$parent.$emit("ALERT","Ok!","The partners has been created successfully","success",3);
                 },response=>{
                     console.log("errorAdding");
                 });
             },
-            
-            deletePartner(id){
+
+            delete(id){
+              this.$parent.$emit("SHOW_PRELOADER");
                 this.provider.delete({id:id}).then(response=>{
+                     this.$parent.$emit("HIDE_PRELOADER");
+                     this.$parent.$emit("ALERT","Ok!","The partners has been deleted successfully","warning",3);
                      this.load();
                 },response=>{
                     console.log("errorAdding");
                 });
             },
-
-            editPartner(item){
+            
+            deletePartner(item){
+              this.toDelete=item;
+                this.$parent.$emit("CONFIRM","Attention!","Are you sure you want to delete the partner: <strong>"+item.name+"</strong>?",this,"OK_TO_DELETE");
                 
             },
 

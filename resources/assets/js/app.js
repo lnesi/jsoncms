@@ -18,23 +18,53 @@ Vue.use(VueRouter);
 
 Vue.component('example', require('./components/Example.vue'));
 Vue.component('modal', require('./components/Modal.vue'));
+Vue.component('alert', require('./components/Alert.vue'))
+Vue.component('confirm', require('./components/Confirm.vue'));
+Vue.component('preloader', require('./components/Preloader.vue'));
+
 
 const Home = require('./components/pages/Home.vue');
 const Partners = require('./components/pages/Partners.vue');
 const EditPartner = require('./components/pages/EditPartner.vue');
+const Error400 = require('./components/pages/Error400.vue');
+const Error404 = require('./components/pages/Error404.vue');
+
 
 const routeList = [
   { path: '/', component: Home },
   { path: '/partners', component: Partners },
-  { path: '/partners/:id', component: EditPartner }
+  { path: '/partners/:id', component: EditPartner },
+  { path: '/400', component: Error400 },
+  { path: '*', component: Error404 }
 ]
+
 
 const router = new VueRouter({
   routes:routeList
 });
 
-const app = new Vue({
+
+
+window.app = new Vue({
     el: '#app',
-    component:["modal"],
-    router:router
+    component:["modal","alert","confirm","preloader"],
+    router:router,
+    methods:{
+    	alert:function(event){
+    		console.log("HI");
+    	}
+    },
+    mounted(){
+    	console.log("APP INIT");
+    	this.$router.beforeEach((to, from, next) => {
+		  this.$emit("SHOW_PRELOADER");
+		  next();
+		});
+		this.$router.afterEach((to, from) => {
+		  this.$emit("HIDE_PRELOADER");
+		});
+		this.$emit("HIDE_PRELOADER");
+    }
+
 });
+
