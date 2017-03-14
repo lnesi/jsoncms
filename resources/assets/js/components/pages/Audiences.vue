@@ -42,10 +42,10 @@
       <modal id="addAudienceModal">
           <h4 class="modal-title" slot="header">Add Partner</h4>
           <form slot="body">
-              <div  :class="{'form-group': true, 'has-error': errors.has('partner') }">
+              <div  :class="{'form-group': true, 'has-error': checkPartner }">
                 <label for="partner_id" class="control-label">Partner</label>
-                <ajax-dropdown data-url="api/partners?paginate=false" name="partner_id" id="partner_id" v-model="addObject.partner_id"></ajax-dropdown>
-                <p class="help-block"></p>
+                <ajax-dropdown data-url="api/partners?paginate=false" name="partner_id"  id="partner_id" v-model="addObject.partner_id"></ajax-dropdown>
+                
               </div>
               
               <div  :class="{'form-group': true, 'has-error': errors.has('name') }">
@@ -76,8 +76,10 @@
           this.singular="Audience";
           this.addObject={name:"",abbr:"",partner_id:""}
        },
-       mounted() {
-         
+       computed: {
+          checkPartner(){
+           return  this.addObject.partner_id=="";
+          }
        },
        methods:{
           deleteAudience(item){
@@ -87,9 +89,12 @@
           validateAddForm(){
                 
                 this.$validator.validateAll().then(result => {
-                  this.add();
-                  $('#addAudienceModal').modal('hide');
-                  this.resetAdd();
+                  if(this.addObject.partner_id!=""){
+                    this.add();
+                    $('#addAudienceModal').modal('hide');
+                    this.resetAdd();
+                  }
+               
                     
                 }).catch(() => null);
           },

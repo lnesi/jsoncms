@@ -12666,8 +12666,11 @@ var crud_mix = __webpack_require__(10);
       this.singular = "Audience";
       this.addObject = { name: "", abbr: "", partner_id: "" };
    },
-   mounted: function mounted() {},
-
+   computed: {
+      checkPartner: function checkPartner() {
+         return this.addObject.partner_id == "";
+      }
+   },
    methods: {
       deleteAudience: function deleteAudience(item) {
          this.toDelete = item;
@@ -12677,9 +12680,11 @@ var crud_mix = __webpack_require__(10);
          var _this = this;
 
          this.$validator.validateAll().then(function (result) {
-            _this.add();
-            $('#addAudienceModal').modal('hide');
-            _this.resetAdd();
+            if (_this.addObject.partner_id != "") {
+               _this.add();
+               $('#addAudienceModal').modal('hide');
+               _this.resetAdd();
+            }
          }).catch(function () {
             return null;
          });
@@ -35971,9 +35976,9 @@ module.exports = Component.exports
 
 var Component = __webpack_require__(0)(
   /* script */
-  null,
+  __webpack_require__(96),
   /* template */
-  null,
+  __webpack_require__(97),
   /* scopeId */
   null,
   /* cssModules */
@@ -35981,6 +35986,20 @@ var Component = __webpack_require__(0)(
 )
 Component.options.__file = "/Users/luis.nesi/jsoncms/resources/assets/js/components/pages/EditAudience.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] EditAudience.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-245dbb3c", Component.options)
+  } else {
+    hotAPI.reload("data-v-245dbb3c", Component.options)
+  }
+})()}
 
 module.exports = Component.exports
 
@@ -36847,7 +36866,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     slot: "body"
   }, [_c('div', {
     class: {
-      'form-group': true, 'has-error': _vm.errors.has('partner')
+      'form-group': true, 'has-error': _vm.checkPartner
     }
   }, [_c('label', {
     staticClass: "control-label",
@@ -36866,8 +36885,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.addObject.partner_id = $$v
       }
     }
-  }), _vm._v(" "), _c('p', {
-    staticClass: "help-block"
   })], 1), _vm._v(" "), _c('div', {
     class: {
       'form-group': true, 'has-error': _vm.errors.has('name')
@@ -50495,6 +50512,259 @@ module.exports = function(module) {
 __webpack_require__(12);
 module.exports = __webpack_require__(13);
 
+
+/***/ }),
+/* 89 */,
+/* 90 */,
+/* 91 */,
+/* 92 */,
+/* 93 */,
+/* 94 */,
+/* 95 */,
+/* 96 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var edit_mix = __webpack_require__(98);
+/* harmony default export */ __webpack_exports__["default"] = {
+    mixins: [edit_mix.default],
+    created: function created() {
+        this.resource_url = "api/audiences{/id}";
+        this.singular = "Audience";
+    },
+    data: function data() {
+        return {
+            item: { id: null, name: null, abbr: null, partner: { id: null } }
+        };
+    }
+
+};
+
+/***/ }),
+/* 97 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "container"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-12"
+  }, [_c('form', {
+    attrs: {
+      "onsubmit": "return false;"
+    },
+    on: {
+      "submit": function($event) {
+        _vm.validateForm()
+      }
+    }
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("Edit Audience")]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "control-label",
+    attrs: {
+      "for": "partner_id"
+    }
+  }, [_vm._v("Partner")]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.item.partner.name))])]), _vm._v(" "), _c('div', {
+    class: {
+      'form-group': true, 'has-error': _vm.errors.has('name')
+    }
+  }, [_c('label', {
+    staticClass: "control-label",
+    attrs: {
+      "for": "InputAddPartnerName"
+    }
+  }, [_vm._v("Name")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.item.name),
+      expression: "item.name"
+    }, {
+      name: "validate",
+      rawName: "v-validate",
+      value: ('required|max:100'),
+      expression: "'required|max:100'"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "name",
+      "id": "InputAddPartnerName",
+      "placeholder": "Name"
+    },
+    domProps: {
+      "value": (_vm.item.name)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.item.name = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('p', {
+    staticClass: "help-block"
+  }, [_vm._v(_vm._s(_vm.errors.first('name')))])]), _vm._v(" "), _c('div', {
+    class: {
+      'form-group': true, 'has-error': _vm.errors.has('abbr')
+    }
+  }, [_c('label', {
+    staticClass: "control-label",
+    attrs: {
+      "for": "InputAddPartnerAbbr"
+    }
+  }, [_vm._v("Abbreviation")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.item.abbr),
+      expression: "item.abbr"
+    }, {
+      name: "validate",
+      rawName: "v-validate",
+      value: ('required|max:5'),
+      expression: "'required|max:5'"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "abbr",
+      "id": "InputAddPartnerAbbr",
+      "placeholder": "abbr"
+    },
+    domProps: {
+      "value": (_vm.item.abbr)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.item.abbr = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('p', {
+    staticClass: "help-block"
+  }, [_vm._v(_vm._s(_vm.errors.first('abbr')))])])]), _vm._v(" "), _c('div', {
+    staticClass: "panel-footer"
+  }, [_vm._m(0), _vm._v(" "), _c('button', {
+    class: {
+      'btn btn-success pull-right': true, 'disabled': _vm.errors.has('name') || _vm.errors.has('abbr')
+    },
+    attrs: {
+      "type": "submit"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-fw fa-floppy-o"
+  }), _vm._v(" Save")])])])])])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('a', {
+    staticClass: "btn btn-default",
+    attrs: {
+      "href": "#/audiences"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-fw fa-chevron-left"
+  }), _vm._v(" Back")])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-245dbb3c", module.exports)
+  }
+}
+
+/***/ }),
+/* 98 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony default export */ __webpack_exports__["default"] = {
+    mounted: function mounted() {
+
+        this.provider = this.$resource(this.resource_url);
+        this.load(this.$route.params.id);
+    },
+
+
+    methods: {
+        load: function load(id) {
+            var _this = this;
+
+            this.$parent.$emit("SHOW_PRELOADER");
+            this.provider.get({ id: id }).then(function (response) {
+                _this.$parent.$emit("HIDE_PRELOADER");
+                _this.item = response.body;
+            }, function (response) {
+                _this.$router.push('/400');
+            });
+        },
+        save: function save() {
+            var _this2 = this;
+
+            this.$parent.$emit("SHOW_PRELOADER");
+            this.provider.update({ id: this.item.id }, this.item).then(function (response) {
+                _this2.$parent.$emit("HIDE_PRELOADER");
+                _this2.$parent.$emit("ALERT", "Ok!", "The " + _this2.singular + " has been updated successfully", "success", 3);
+            });
+        },
+        validateForm: function validateForm() {
+            var _this3 = this;
+
+            this.$validator.validateAll().then(function (result) {
+                _this3.save();
+            }).catch(function () {
+                return null;
+            });
+        }
+    }
+};
 
 /***/ })
 /******/ ]);
