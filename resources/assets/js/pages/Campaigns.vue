@@ -5,7 +5,7 @@
               <div class="col-md-12 ">
                   <div class="panel panel-default">
                       <div class="panel-heading">
-                      <h2>Partners <small><button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#addPartnerModal"><i class="fa fa-fw fa-plus"></i> Add</button></small></h2>
+                      <h2>Campaings <small><button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#addAudienceModal"><i class="fa fa-fw fa-plus"></i> Add</button></small></h2>
                       
                       </div>
 
@@ -14,6 +14,7 @@
                         <table class="table table-striped table-bordered">
                             <thead>
                             <tr>
+                              <th>Partner</th>
                               <th>Name</th>
                               <th>Abbr</th>
                               <th>Actions</th>
@@ -21,12 +22,13 @@
                             </thead>
                             <tbody>
                             <tr v-for="item in list">
+                                <td>{{item.partner.abbr}}</td>
                                 <td>{{item.name}}</td>
                                 <td>{{item.abbr}}</td>
                                 <td>
                                      <div class="btn-group btn-group-xs" role="group" aria-label="...">
-                                        <a class="btn btn-default" :href="'#partners/'+item.id" ><i class="fa fa-fw fa-edit"></i> Edit</a>
-                                        <button type="button" class="btn btn-default" @click="deletePartner(item)"><i class="fa fa-fw fa-trash"></i> Delete</button>
+                                        <a class="btn btn-default" :href="'#campaings/'+item.id" ><i class="fa fa-fw fa-edit"></i> Edit</a>
+                                        <button type="button" class="btn btn-default" @click="trash(item)"><i class="fa fa-fw fa-trash"></i> Delete</button>
                                      </div>
                                 </td>
                             </tr>
@@ -37,10 +39,15 @@
               </div>
           </div>
       </div>
-      
-      <modal id="addPartnerModal">
+      <modal id="addAudienceModal">
           <h4 class="modal-title" slot="header">Add Partner</h4>
           <form slot="body">
+              <div  :class="{'form-group': true, 'has-error': checkPartner }">
+                <label for="partner_id" class="control-label">Partner</label>
+                <ajax-dropdown data-url="api/partners?paginate=false" name="partner_id"  id="partner_id" v-model="addObject.partner_id"></ajax-dropdown>
+                
+              </div>
+              
               <div  :class="{'form-group': true, 'has-error': errors.has('name') }">
                   <label for="InputAddPartnerName" class="control-label">Name</label>
                   <input type="text" v-model="addObject.name" v-validate="'required|max:100'" name="name" class="form-control" id="InputAddPartnerName" placeholder="Name">
@@ -60,37 +67,34 @@
 </template>
 
 <script>
-    var crud_mix = require('../../mixins/crd.js');
+    var crud_mix = require('../mixins/crd.js');
     export default {
         mixins: [crud_mix.default],
-        created: function () {
-          this.resource_url="api/partners{/id}";
-          this.singular="Partner";
-          this.addObject={name:"",abbr:""}
-       },
-        
-        methods:{
-              
-            
-            deletePartner(item){
-              this.toDelete=item;
-              this.$parent.$emit("CONFIRM","Attention!","Are you sure you want to delete the partner: <strong>"+item.name+"</strong>?",this,"OK_TO_DELETE");
-                
-            },
-
-            validateAddForm(){
-                
+        created: function() {
+            this.resource_url = "api/campaings{/id}";
+            this.singular = "Campaign";
+            this.addObject = { name: "", abbr: "", partner_id: "" }
+        },
+        computed: {
+            checkPartner() {
+                return this.addObject.partner_id == "";
+            }
+        },
+        methods: {
+            validateAddForm() {
                 this.$validator.validateAll().then(result => {
-                  this.add();
-                  $('#addPartnerModal').modal('hide');
-                  this.resetAdd();
-                    
+                    if (this.addObject.partner_id != "") {
+                        this.add();
+                        $('#addAudienceModal').modal('hide');
+                        this.resetAdd();
+                    }
                 }).catch(() => null);
             },
-
-            resetAdd(){
-                this.addObject={name:"",abbr:""};
+            resetAdd() {
+                this.addObject = { name: "", abbr: "", partner_id: "" }
             }
         }
+
     }
+
 </script>

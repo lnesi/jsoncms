@@ -25,7 +25,7 @@
                           <ul class="dropdown-menu">
                            
                             <li><a href="#/audiences">Audiences</a></li>
-                            <li><a href="#/campaigns">Campaigns</a></li>
+                            <li><a href="#/campaings">Campaigns</a></li>
                             
                            
                           </ul>

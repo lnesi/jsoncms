@@ -25,16 +25,16 @@ Vue.component('mainnav', require('./components/MainNav.vue'));
 Vue.component('ajax-dropdown', require('./components/AjaxDropdown.vue'));
 
 
-const Home = require('./components/pages/Home.vue');
-const Partners = require('./components/pages/Partners.vue');
-const EditPartner = require('./components/pages/EditPartner.vue');
-const Audiences = require('./components/pages/Audiences.vue');
-const EditAudience = require('./components/pages/EditAudience.vue');
-const Campaigns = require('./components/pages/Campaigns.vue');
-const EditCampaign = require('./components/pages/EditCampaign.vue');
+const Home = require('./pages/Home.vue');
+const Partners = require('./pages/Partners.vue');
+const EditPartner = require('./pages/EditPartner.vue');
+const Audiences = require('./pages/Audiences.vue');
+const EditAudience = require('./pages/EditAudience.vue');
+const Campaigns = require('./pages/Campaigns.vue');
+const EditCampaign = require('./pages/EditCampaign.vue');
 
-const Error400 = require('./components/pages/Error400.vue');
-const Error404 = require('./components/pages/Error404.vue');
+const Error400 = require('./pages/Error400.vue');
+const Error404 = require('./pages/Error404.vue');
 
 
 const routeList = [
@@ -42,8 +42,8 @@ const routeList = [
   { path: '/partners', component: Partners },
   { path: '/audiences', component: Audiences },
   { path: '/audiences/:id', component: EditAudience },
-  { path: '/campaigns', component: Campaigns },
-  { path: '/campaigns/:id', component: EditCampaign },
+  { path: '/campaings', component: Campaigns },
+  { path: '/campaings/:id', component: EditCampaign },
   { path: '/partners/:id', component: EditPartner },
   { path: '/400', component: Error400 },
   { path: '*', component: Error404 }

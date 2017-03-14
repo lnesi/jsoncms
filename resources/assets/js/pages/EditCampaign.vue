@@ -4,7 +4,7 @@
             <div class="col-md-12">
               <form  @submit="validateForm()" onsubmit="return false;">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Edit Audience</div>
+                    <div class="panel-heading">Edit Campaing</div>
 
                     <div class="panel-body">
                            <div  class="form-group">
@@ -24,7 +24,7 @@
                     
                     </div>
                     <div class="panel-footer">
-                        <a  class="btn btn-default" href="#/audiences" ><i class="fa fa-fw fa-chevron-left"></i> Back</a>
+                        <a  class="btn btn-default" href="#/campaings" ><i class="fa fa-fw fa-chevron-left"></i> Back</a>
                         <button type="submit"   :class="{'btn btn-success pull-right': true, 'disabled': errors.has('name') || errors.has('abbr') }"><i class="fa fa-fw fa-floppy-o" ></i> Save</button>
                     </div>
                 </div>
@@ -35,11 +35,11 @@
 </template>
 
 <script>
-    var edit_mix = require('../../mixins/edit.js');
+    var edit_mix = require('../mixins/edit.js');
     export default {
         mixins: [edit_mix.default],
         created: function () {
-          this.resource_url="api/audiences{/id}";
+          this.resource_url="api/campaings{/id}";
           this.singular="Audience";
 
        },
