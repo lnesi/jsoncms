@@ -10,13 +10,13 @@
         mounted() {
             
             this.$http.get(this.dataUrl).then(response => {
-            // get body data
-            this.list=response.body;
-            
+                // get body data
+                this.list=response.body;
+                
 
-          }, response => {
-            // error callback
-          });
+              }, response => {
+                // error callback
+              });
             
         },
         data:function(){

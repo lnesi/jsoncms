@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-
+use App\Http\Controllers;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -28,3 +28,6 @@ Route::resource('types', TypeController::class,['only' => [ 'index','show']]);
 Route::resource('components', ComponentController::class,['only' => [ 'index','show']]);
 Route::resource('countries', CountryController::class,['only' => [ 'index','show']]);
 Route::resource('languages', LanguageController::class,['only' => [ 'index','show']]);
+
+Route::get('regions/{id}/remove/{country_id}', 'RegionController@removeCountry');
+Route::get('regions/{id}/add/{country_id}', 'RegionController@addCountry');

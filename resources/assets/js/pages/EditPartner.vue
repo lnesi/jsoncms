@@ -32,42 +32,20 @@
 </template>
 
 <script>
+    var edit_mix = require('../mixins/edit.js');
     export default {
-        mounted() {
-            this.provider = this.$resource('api/partners{/id}');
-            this.load(this.$route.params.id);
-        },
-        
+        mixins: [edit_mix.default],
+        created: function () {
+          this.resource_url="api/partners{/id}";
+          this.singular="Partner";
+
+       },
         data:function(){
             return {
                 item:{id:null,name:null,abbr:null}
             }
         },
 
-        methods:{
-            load(id){
-                this.$parent.$emit("SHOW_PRELOADER");
-                this.provider.get({id:id}).then(response=>{
-                    this.$parent.$emit("HIDE_PRELOADER");
-                    this.item=response.body;    
-                },response=>{
-                    this.$router.push('/400');
-                });
-            },
-            
-            save(){
-                this.$parent.$emit("SHOW_PRELOADER");
-                this.provider.update({id:this.item.id},this.item).then(response=>{
-                    this.$parent.$emit("HIDE_PRELOADER");
-                    this.$parent.$emit("ALERT","Ok!","The partners has been updated successfully","success",3);
-                });
-            },
-
-            validateForm(){
-                this.$validator.validateAll().then(result=>{
-                    this.save();
-                }).catch(()=>null);
-            }
-        }
+        
     }
 </script>

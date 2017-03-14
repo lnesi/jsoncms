@@ -25,6 +25,7 @@ Vue.component('mainnav', require('./components/MainNav.vue'));
 Vue.component('ajax-dropdown', require('./components/AjaxDropdown.vue'));
 
 
+
 const Home = require('./pages/Home.vue');
 const Partners = require('./pages/Partners.vue');
 const EditPartner = require('./pages/EditPartner.vue');
@@ -32,6 +33,8 @@ const Audiences = require('./pages/Audiences.vue');
 const EditAudience = require('./pages/EditAudience.vue');
 const Campaigns = require('./pages/Campaigns.vue');
 const EditCampaign = require('./pages/EditCampaign.vue');
+const Regions = require('./pages/Regions.vue');
+const EditRegion = require('./pages/EditRegion.vue');
 
 const Error400 = require('./pages/Error400.vue');
 const Error404 = require('./pages/Error404.vue');
@@ -40,11 +43,13 @@ const Error404 = require('./pages/Error404.vue');
 const routeList = [
   { path: '/', component: Home },
   { path: '/partners', component: Partners },
+  { path: '/partners/:id', component: EditPartner },
   { path: '/audiences', component: Audiences },
   { path: '/audiences/:id', component: EditAudience },
   { path: '/campaings', component: Campaigns },
   { path: '/campaings/:id', component: EditCampaign },
-  { path: '/partners/:id', component: EditPartner },
+  { path: '/regions', component: Regions },
+  { path: '/regions/:id', component: EditRegion },
   { path: '/400', component: Error400 },
   { path: '*', component: Error404 }
 ]

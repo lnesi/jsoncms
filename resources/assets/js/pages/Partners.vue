@@ -26,7 +26,7 @@
                                 <td>
                                      <div class="btn-group btn-group-xs" role="group" aria-label="...">
                                         <a class="btn btn-default" :href="'#partners/'+item.id" ><i class="fa fa-fw fa-edit"></i> Edit</a>
-                                        <button type="button" class="btn btn-default" @click="deletePartner(item)"><i class="fa fa-fw fa-trash"></i> Delete</button>
+                                        <button type="button" class="btn btn-default" @click="trash(item)"><i class="fa fa-fw fa-trash"></i> Delete</button>
                                      </div>
                                 </td>
                             </tr>
@@ -71,13 +71,6 @@
         
         methods:{
               
-            
-            deletePartner(item){
-              this.toDelete=item;
-              this.$parent.$emit("CONFIRM","Attention!","Are you sure you want to delete the partner: <strong>"+item.name+"</strong>?",this,"OK_TO_DELETE");
-                
-            },
-
             validateAddForm(){
                 
                 this.$validator.validateAll().then(result => {

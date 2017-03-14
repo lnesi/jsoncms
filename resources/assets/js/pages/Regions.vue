@@ -5,7 +5,7 @@
               <div class="col-md-12 ">
                   <div class="panel panel-default">
                       <div class="panel-heading">
-                      <h2>Audiences <small><button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#addAudienceModal"><i class="fa fa-fw fa-plus"></i> Add</button></small></h2>
+                      <h2>Regions <small><button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#addAudienceModal"><i class="fa fa-fw fa-plus"></i> Add</button></small></h2>
                       
                       </div>
 
@@ -17,6 +17,7 @@
                               <th>Partner</th>
                               <th>Name</th>
                               <th>Abbr</th>
+                              <th>Countries</th>
                               <th>Actions</th>
                               </tr>
                             </thead>
@@ -25,6 +26,7 @@
                                 <td>{{item.partner.abbr}}</td>
                                 <td>{{item.name}}</td>
                                 <td>{{item.abbr}}</td>
+                                <td>{{item.countries.length}}</td>
                                 <td>
                                      <div class="btn-group btn-group-xs" role="group" aria-label="...">
                                         <a class="btn btn-default" :href="'#regions/'+item.id" ><i class="fa fa-fw fa-edit"></i> Edit</a>
@@ -40,7 +42,7 @@
           </div>
       </div>
       <modal id="addAudienceModal">
-          <h4 class="modal-title" slot="header">Add Audience</h4>
+          <h4 class="modal-title" slot="header">Add Region</h4>
           <form slot="body">
               <div  :class="{'form-group': true, 'has-error': checkPartner }">
                 <label for="partner_id" class="control-label">Partner</label>
@@ -55,7 +57,7 @@
                 </div>
                 <div :class="{'form-group': true, 'has-error': errors.has('abbr') }">
                   <label for="InputAddPartnerAbbr" class="control-label">Abbreviation</label>
-                  <input type="text" v-model="addObject.abbr" name="abbr" v-validate="'required|max:5'" class="form-control" id="InputAddPartnerAbbr" placeholder="abbr" >
+                  <input type="text" v-model="addObject.abbr" name="abbr" v-validate="'required|max:10'" class="form-control" id="InputAddPartnerAbbr" placeholder="abbr" >
                   <p class="help-block">{{ errors.first('abbr') }}</p>
                 </div>
           </form>
@@ -67,35 +69,34 @@
 </template>
 
 <script>
-var crud_mix = require('../mixins/crd.js');
-export default {
-    mixins: [crud_mix.default],
-    created: function() {
-        this.resource_url = "api/audiences{/id}";
-        this.singular = "Audience";
-        this.addObject = { name: "", abbr: "", partner_id: "" }
-    },
-    computed: {
-        checkPartner() {
-            return this.addObject.partner_id == "";
-        }
-    },
-    methods: {
-        
-        validateAddForm() {
-            this.$validator.validateAll().then(result => {
-                if (this.addObject.partner_id != "") {
-                    this.add();
-                    $('#addAudienceModal').modal('hide');
-                    this.resetAdd();
-                }
-            }).catch(() => null);
-        },
-
-        resetAdd() {
+    var crud_mix = require('../mixins/crd.js');
+    export default {
+        mixins: [crud_mix.default],
+        created: function() {
+            this.resource_url = "api/regions{/id}";
+            this.singular = "Region";
             this.addObject = { name: "", abbr: "", partner_id: "" }
+        },
+        computed: {
+            checkPartner() {
+                return this.addObject.partner_id == "";
+            }
+        },
+        methods: {
+            validateAddForm() {
+                this.$validator.validateAll().then(result => {
+                    if (this.addObject.partner_id != "") {
+                        this.add();
+                        $('#addAudienceModal').modal('hide');
+                        this.resetAdd();
+                    }
+                }).catch(() => null);
+            },
+            resetAdd() {
+                this.addObject = { name: "", abbr: "", partner_id: "" }
+            }
         }
+
     }
 
-}
 </script>

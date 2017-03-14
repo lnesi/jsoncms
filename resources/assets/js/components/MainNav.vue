@@ -21,11 +21,11 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                     <li class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Config <span class="caret"></span></a>
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Setup <span class="caret"></span></a>
                           <ul class="dropdown-menu">
-                           
-                            <li><a href="#/audiences">Audiences</a></li>
                             <li><a href="#/campaings">Campaigns</a></li>
+                            <li><a href="#/audiences">Audiences</a></li>
+                            <li><a href="#/regions">Regions</a></li>
                             
                            
                           </ul>

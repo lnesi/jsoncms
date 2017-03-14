@@ -40,7 +40,7 @@
           </div>
       </div>
       <modal id="addAudienceModal">
-          <h4 class="modal-title" slot="header">Add Partner</h4>
+          <h4 class="modal-title" slot="header">Add Campaing</h4>
           <form slot="body">
               <div  :class="{'form-group': true, 'has-error': checkPartner }">
                 <label for="partner_id" class="control-label">Partner</label>

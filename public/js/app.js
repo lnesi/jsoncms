@@ -11335,11 +11335,13 @@ var Audiences = __webpack_require__(110);
 var EditAudience = __webpack_require__(112);
 var Campaigns = __webpack_require__(111);
 var EditCampaign = __webpack_require__(113);
+var Regions = __webpack_require__(128);
+var EditRegion = __webpack_require__(131);
 
 var Error400 = __webpack_require__(115);
 var Error404 = __webpack_require__(116);
 
-var routeList = [{ path: '/', component: Home }, { path: '/partners', component: Partners }, { path: '/audiences', component: Audiences }, { path: '/audiences/:id', component: EditAudience }, { path: '/campaings', component: Campaigns }, { path: '/campaings/:id', component: EditCampaign }, { path: '/partners/:id', component: EditPartner }, { path: '/400', component: Error400 }, { path: '*', component: Error404 }];
+var routeList = [{ path: '/', component: Home }, { path: '/partners', component: Partners }, { path: '/partners/:id', component: EditPartner }, { path: '/audiences', component: Audiences }, { path: '/audiences/:id', component: EditAudience }, { path: '/campaings', component: Campaigns }, { path: '/campaings/:id', component: EditCampaign }, { path: '/regions', component: Regions }, { path: '/regions/:id', component: EditRegion }, { path: '/400', component: Error400 }, { path: '*', component: Error404 }];
 
 var router = new VueRouter({
   routes: routeList
@@ -35693,19 +35695,23 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "aria-haspopup": "true",
       "aria-expanded": "false"
     }
-  }, [_vm._v("Config "), _c('span', {
+  }, [_vm._v("Setup "), _c('span', {
     staticClass: "caret"
   })]), _vm._v(" "), _c('ul', {
     staticClass: "dropdown-menu"
   }, [_c('li', [_c('a', {
     attrs: {
+      "href": "#/campaings"
+    }
+  }, [_vm._v("Campaigns")])]), _vm._v(" "), _c('li', [_c('a', {
+    attrs: {
       "href": "#/audiences"
     }
   }, [_vm._v("Audiences")])]), _vm._v(" "), _c('li', [_c('a', {
     attrs: {
-      "href": "#/campaings"
+      "href": "#/regions"
     }
-  }, [_vm._v("Campaigns")])])])]), _vm._v(" "), _c('li', {
+  }, [_vm._v("Regions")])])])]), _vm._v(" "), _c('li', {
     staticClass: "dropdown"
   }, [_c('a', {
     staticClass: "dropdown-toggle",
@@ -49713,50 +49719,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+var edit_mix = __webpack_require__(98);
 /* harmony default export */ __webpack_exports__["default"] = {
-    mounted: function mounted() {
-        this.provider = this.$resource('api/partners{/id}');
-        this.load(this.$route.params.id);
+    mixins: [edit_mix.default],
+    created: function created() {
+        this.resource_url = "api/partners{/id}";
+        this.singular = "Partner";
     },
-
-
     data: function data() {
         return {
             item: { id: null, name: null, abbr: null }
         };
-    },
-
-    methods: {
-        load: function load(id) {
-            var _this = this;
-
-            this.$parent.$emit("SHOW_PRELOADER");
-            this.provider.get({ id: id }).then(function (response) {
-                _this.$parent.$emit("HIDE_PRELOADER");
-                _this.item = response.body;
-            }, function (response) {
-                _this.$router.push('/400');
-            });
-        },
-        save: function save() {
-            var _this2 = this;
-
-            this.$parent.$emit("SHOW_PRELOADER");
-            this.provider.update({ id: this.item.id }, this.item).then(function (response) {
-                _this2.$parent.$emit("HIDE_PRELOADER");
-                _this2.$parent.$emit("ALERT", "Ok!", "The partners has been updated successfully", "success", 3);
-            });
-        },
-        validateForm: function validateForm() {
-            var _this3 = this;
-
-            this.$validator.validateAll().then(function (result) {
-                _this3.save();
-            }).catch(function () {
-                return null;
-            });
-        }
     }
+
 };
 
 /***/ }),
@@ -49912,10 +49887,6 @@ var crud_mix = __webpack_require__(10);
     },
 
     methods: {
-        deletePartner: function deletePartner(item) {
-            this.toDelete = item;
-            this.$parent.$emit("CONFIRM", "Attention!", "Are you sure you want to delete the partner: <strong>" + item.name + "</strong>?", this, "OK_TO_DELETE");
-        },
         validateAddForm: function validateAddForm() {
             var _this = this;
 
@@ -50474,7 +50445,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_c('a', {
       staticClass: "btn btn-default",
       attrs: {
-        "href": '#audiences/' + item.id
+        "href": '#regions/' + item.id
       }
     }, [_c('i', {
       staticClass: "fa fa-fw fa-edit"
@@ -50498,7 +50469,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('h4', {
     staticClass: "modal-title",
     slot: "header"
-  }, [_vm._v("Add Partner")]), _vm._v(" "), _c('form', {
+  }, [_vm._v("Add Audience")]), _vm._v(" "), _c('form', {
     slot: "body"
   }, [_c('div', {
     class: {
@@ -50958,7 +50929,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       },
       on: {
         "click": function($event) {
-          _vm.deletePartner(item)
+          _vm.trash(item)
         }
       }
     }, [_c('i', {
@@ -51177,7 +51148,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('h4', {
     staticClass: "modal-title",
     slot: "header"
-  }, [_vm._v("Add Partner")]), _vm._v(" "), _c('form', {
+  }, [_vm._v("Add Campaing")]), _vm._v(" "), _c('form', {
     slot: "body"
   }, [_c('div', {
     class: {
@@ -51321,6 +51292,705 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
      require("vue-hot-reload-api").rerender("data-v-f3474070", module.exports)
+  }
+}
+
+/***/ }),
+/* 128 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(129),
+  /* template */
+  __webpack_require__(130),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/luis.nesi/jsoncms/resources/assets/js/pages/Regions.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Regions.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3ca437a4", Component.options)
+  } else {
+    hotAPI.reload("data-v-3ca437a4", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 129 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var crud_mix = __webpack_require__(10);
+/* harmony default export */ __webpack_exports__["default"] = {
+    mixins: [crud_mix.default],
+    created: function created() {
+        this.resource_url = "api/regions{/id}";
+        this.singular = "Region";
+        this.addObject = { name: "", abbr: "", partner_id: "" };
+    },
+    computed: {
+        checkPartner: function checkPartner() {
+            return this.addObject.partner_id == "";
+        }
+    },
+    methods: {
+        validateAddForm: function validateAddForm() {
+            var _this = this;
+
+            this.$validator.validateAll().then(function (result) {
+                if (_this.addObject.partner_id != "") {
+                    _this.add();
+                    $('#addAudienceModal').modal('hide');
+                    _this.resetAdd();
+                }
+            }).catch(function () {
+                return null;
+            });
+        },
+        resetAdd: function resetAdd() {
+            this.addObject = { name: "", abbr: "", partner_id: "" };
+        }
+    }
+
+};
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
+
+/***/ }),
+/* 130 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('div', {
+    staticClass: "container"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-12 "
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_c('table', {
+    staticClass: "table table-striped table-bordered"
+  }, [_vm._m(1), _vm._v(" "), _c('tbody', _vm._l((_vm.list), function(item) {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(item.partner.abbr))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(item.abbr))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(item.countries.length))]), _vm._v(" "), _c('td', [_c('div', {
+      staticClass: "btn-group btn-group-xs",
+      attrs: {
+        "role": "group",
+        "aria-label": "..."
+      }
+    }, [_c('a', {
+      staticClass: "btn btn-default",
+      attrs: {
+        "href": '#regions/' + item.id
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-fw fa-edit"
+    }), _vm._v(" Edit")]), _vm._v(" "), _c('button', {
+      staticClass: "btn btn-default",
+      attrs: {
+        "type": "button"
+      },
+      on: {
+        "click": function($event) {
+          _vm.trash(item)
+        }
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-fw fa-trash"
+    }), _vm._v(" Delete")])])])])
+  }))])])])])])]), _vm._v(" "), _c('modal', {
+    attrs: {
+      "id": "addAudienceModal"
+    }
+  }, [_c('h4', {
+    staticClass: "modal-title",
+    slot: "header"
+  }, [_vm._v("Add Region")]), _vm._v(" "), _c('form', {
+    slot: "body"
+  }, [_c('div', {
+    class: {
+      'form-group': true, 'has-error': _vm.checkPartner
+    }
+  }, [_c('label', {
+    staticClass: "control-label",
+    attrs: {
+      "for": "partner_id"
+    }
+  }, [_vm._v("Partner")]), _vm._v(" "), _c('ajax-dropdown', {
+    attrs: {
+      "data-url": "api/partners?paginate=false",
+      "name": "partner_id",
+      "id": "partner_id"
+    },
+    model: {
+      value: (_vm.addObject.partner_id),
+      callback: function($$v) {
+        _vm.addObject.partner_id = $$v
+      }
+    }
+  })], 1), _vm._v(" "), _c('div', {
+    class: {
+      'form-group': true, 'has-error': _vm.errors.has('name')
+    }
+  }, [_c('label', {
+    staticClass: "control-label",
+    attrs: {
+      "for": "InputAddPartnerName"
+    }
+  }, [_vm._v("Name")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.addObject.name),
+      expression: "addObject.name"
+    }, {
+      name: "validate",
+      rawName: "v-validate",
+      value: ('required|max:100'),
+      expression: "'required|max:100'"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "name",
+      "id": "InputAddPartnerName",
+      "placeholder": "Name"
+    },
+    domProps: {
+      "value": (_vm.addObject.name)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.addObject.name = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('p', {
+    staticClass: "help-block"
+  }, [_vm._v(_vm._s(_vm.errors.first('name')))])]), _vm._v(" "), _c('div', {
+    class: {
+      'form-group': true, 'has-error': _vm.errors.has('abbr')
+    }
+  }, [_c('label', {
+    staticClass: "control-label",
+    attrs: {
+      "for": "InputAddPartnerAbbr"
+    }
+  }, [_vm._v("Abbreviation")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.addObject.abbr),
+      expression: "addObject.abbr"
+    }, {
+      name: "validate",
+      rawName: "v-validate",
+      value: ('required|max:10'),
+      expression: "'required|max:10'"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "abbr",
+      "id": "InputAddPartnerAbbr",
+      "placeholder": "abbr"
+    },
+    domProps: {
+      "value": (_vm.addObject.abbr)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.addObject.abbr = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('p', {
+    staticClass: "help-block"
+  }, [_vm._v(_vm._s(_vm.errors.first('abbr')))])])]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-default",
+    attrs: {
+      "type": "button",
+      "data-dismiss": "modal"
+    },
+    slot: "footer"
+  }, [_vm._v("Cancel")]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-success",
+    class: {
+      'btn btn-success': true, 'disabled': _vm.errors.has('name') || _vm.errors.has('abbr')
+    },
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.validateAddForm
+    },
+    slot: "footer"
+  }, [_c('i', {
+    staticClass: "fa fa-fw fa-floppy-o"
+  }), _vm._v(" Save")])])], 1)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "panel-heading"
+  }, [_c('h2', [_vm._v("Regions "), _c('small', [_c('button', {
+    staticClass: "btn btn-default pull-right",
+    attrs: {
+      "type": "button",
+      "data-toggle": "modal",
+      "data-target": "#addAudienceModal"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-fw fa-plus"
+  }), _vm._v(" Add")])])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("Partner")]), _vm._v(" "), _c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Abbr")]), _vm._v(" "), _c('th', [_vm._v("Countries")]), _vm._v(" "), _c('th', [_vm._v("Actions")])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-3ca437a4", module.exports)
+  }
+}
+
+/***/ }),
+/* 131 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(132),
+  /* template */
+  __webpack_require__(133),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/luis.nesi/jsoncms/resources/assets/js/pages/EditRegion.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] EditRegion.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5bf3b989", Component.options)
+  } else {
+    hotAPI.reload("data-v-5bf3b989", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 132 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var edit_mix = __webpack_require__(98);
+/* harmony default export */ __webpack_exports__["default"] = {
+  mixins: [edit_mix.default],
+  created: function created() {
+    this.resource_url = "api/regions{/id}";
+    this.singular = "Region";
+  },
+  mounted: function mounted() {
+    this.$on('OK_TO_REMOVE_COUNTRY', function () {
+      if (this.toRemove != null) {
+        this.removeCountryApi(this.toRemove.id);
+        this.toRemove = null;
+      }
+    }.bind(this));
+  },
+
+  data: function data() {
+    return {
+      item: { id: null, name: null, abbr: null, partner: { id: null } },
+      toRemove: null,
+      countryToAdd: ''
+    };
+  },
+  computed: {
+    checkSelectedCountry: function checkSelectedCountry() {
+      if (this.countryToAdd != "") {
+        return false;
+      }
+      return "disabled";
+    }
+  },
+  methods: {
+    removeCountry: function removeCountry(item) {
+      this.toRemove = item;
+      this.$parent.$emit("CONFIRM", "Attention!", "Are you sure you want to remove the country: <strong>" + item.name + "</strong>?", this, "OK_TO_REMOVE_COUNTRY");
+    },
+    addCountry: function addCountry() {
+      var _this = this;
+
+      if (this.countryToAdd != "") {
+        this.$http.get("api/regions/" + this.item.id + "/add/" + this.countryToAdd).then(function (response) {
+          // get body data
+          _this.item = response.body;
+          _this.$parent.$emit("ALERT", "Ok!", "The country has been added successfully", "success", 3);
+          _this.countryToAdd = "";
+        }, function (response) {
+          // error callback
+        });
+      }
+    },
+    removeCountryApi: function removeCountryApi(id) {
+      var _this2 = this;
+
+      this.$http.get("api/regions/" + this.item.id + "/remove/" + id).then(function (response) {
+        // get body data
+        _this2.item = response.body;
+        _this2.$parent.$emit("ALERT", "Ok!", "The country has been removed successfully", "success", 3);
+      }, function (response) {
+        // error callback
+      });
+    }
+  }
+};
+
+/***/ }),
+/* 133 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "container"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-12"
+  }, [_c('form', {
+    attrs: {
+      "onsubmit": "return false;"
+    },
+    on: {
+      "submit": function($event) {
+        _vm.validateForm()
+      }
+    }
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("Edit Region")]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "control-label",
+    attrs: {
+      "for": "partner_id"
+    }
+  }, [_vm._v("Partner")]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.item.partner.name))])]), _vm._v(" "), _c('div', {
+    class: {
+      'form-group': true, 'has-error': _vm.errors.has('name')
+    }
+  }, [_c('label', {
+    staticClass: "control-label",
+    attrs: {
+      "for": "InputAddPartnerName"
+    }
+  }, [_vm._v("Name")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.item.name),
+      expression: "item.name"
+    }, {
+      name: "validate",
+      rawName: "v-validate",
+      value: ('required|max:100'),
+      expression: "'required|max:100'"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "name",
+      "id": "InputAddPartnerName",
+      "placeholder": "Name"
+    },
+    domProps: {
+      "value": (_vm.item.name)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.item.name = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('p', {
+    staticClass: "help-block"
+  }, [_vm._v(_vm._s(_vm.errors.first('name')))])]), _vm._v(" "), _c('div', {
+    class: {
+      'form-group': true, 'has-error': _vm.errors.has('abbr')
+    }
+  }, [_c('label', {
+    staticClass: "control-label",
+    attrs: {
+      "for": "InputAddPartnerAbbr"
+    }
+  }, [_vm._v("Abbreviation")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.item.abbr),
+      expression: "item.abbr"
+    }, {
+      name: "validate",
+      rawName: "v-validate",
+      value: ('required|max:10'),
+      expression: "'required|max:10'"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "abbr",
+      "id": "InputAddPartnerAbbr",
+      "placeholder": "abbr"
+    },
+    domProps: {
+      "value": (_vm.item.abbr)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.item.abbr = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('p', {
+    staticClass: "help-block"
+  }, [_vm._v(_vm._s(_vm.errors.first('abbr')))])]), _vm._v(" "), _c('label', {
+    staticClass: "control-label",
+    attrs: {
+      "for": ""
+    }
+  }, [_vm._v("Countries")]), _vm._v(" "), _c('form', {
+    staticClass: "form-inline"
+  }, [_c('ajax-dropdown', {
+    attrs: {
+      "data-url": "api/countries?paginate=false",
+      "name": "country_id",
+      "id": "country_id"
+    },
+    model: {
+      value: (_vm.countryToAdd),
+      callback: function($$v) {
+        _vm.countryToAdd = $$v
+      }
+    }
+  }), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-default",
+    attrs: {
+      "type": "button",
+      "disabled": _vm.checkSelectedCountry
+    },
+    on: {
+      "click": function($event) {
+        _vm.addCountry()
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-fw fa-plus"
+  }), _vm._v("Add Country")])], 1), _vm._v(" "), _c('br'), _vm._v(" "), _c('table', {
+    staticClass: "table table-striped table-bordered"
+  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.item.countries), function(country) {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(country.code))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(country.name))]), _vm._v(" "), _c('td', [_c('button', {
+      staticClass: "btn btn-default btn-xs",
+      attrs: {
+        "type": "button"
+      },
+      on: {
+        "click": function($event) {
+          _vm.removeCountry(country)
+        }
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-fw fa-trash"
+    }), _vm._v(" Remove")])])])
+  }))])]), _vm._v(" "), _c('div', {
+    staticClass: "panel-footer"
+  }, [_vm._m(1), _vm._v(" "), _c('button', {
+    class: {
+      'btn btn-success pull-right': true, 'disabled': _vm.errors.has('name') || _vm.errors.has('abbr')
+    },
+    attrs: {
+      "type": "submit"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-fw fa-floppy-o"
+  }), _vm._v(" Save")])])])])])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("Abbr")]), _vm._v(" "), _c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Actions")])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('a', {
+    staticClass: "btn btn-default",
+    attrs: {
+      "href": "#/regions"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-fw fa-chevron-left"
+  }), _vm._v(" Back")])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-5bf3b989", module.exports)
   }
 }
 
