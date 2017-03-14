@@ -22,6 +22,7 @@ Vue.component('alert', require('./components/Alert.vue'))
 Vue.component('confirm', require('./components/Confirm.vue'));
 Vue.component('preloader', require('./components/Preloader.vue'));
 Vue.component('mainnav', require('./components/MainNav.vue'));
+Vue.component('ajax-dropdown', require('./components/AjaxDropdown.vue'));
 
 
 const Home = require('./components/pages/Home.vue');
@@ -57,7 +58,7 @@ const router = new VueRouter({
 
 window.app = new Vue({
     el: '#app',
-    component:["modal","alert","confirm","preloader","mainnav"],
+    component:["modal","alert","confirm","preloader","mainnav","ajax-dropdown"],
     router:router,
     methods:{
     	alert:function(event){

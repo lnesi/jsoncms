@@ -12,7 +12,13 @@ class CrudApiController extends Controller{
    * @return \Illuminate\Http\Response
    */
   public function index(){
-      return call_user_func($this->modelClass."::paginate");
+      if(isset($_GET['paginate']) && $_GET['paginate']=="false"){
+        $result=call_user_func($this->modelClass."::all");
+      }else{
+        $result=call_user_func($this->modelClass."::paginate");
+      }
+      
+      return $result;
   }
 
   /**
