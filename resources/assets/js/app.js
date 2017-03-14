@@ -21,11 +21,17 @@ Vue.component('modal', require('./components/Modal.vue'));
 Vue.component('alert', require('./components/Alert.vue'))
 Vue.component('confirm', require('./components/Confirm.vue'));
 Vue.component('preloader', require('./components/Preloader.vue'));
+Vue.component('mainnav', require('./components/MainNav.vue'));
 
 
 const Home = require('./components/pages/Home.vue');
 const Partners = require('./components/pages/Partners.vue');
 const EditPartner = require('./components/pages/EditPartner.vue');
+const Audiences = require('./components/pages/Audiences.vue');
+const EditAudience = require('./components/pages/EditAudience.vue');
+const Campaigns = require('./components/pages/Campaigns.vue');
+const EditCampaign = require('./components/pages/EditCampaign.vue');
+
 const Error400 = require('./components/pages/Error400.vue');
 const Error404 = require('./components/pages/Error404.vue');
 
@@ -33,6 +39,10 @@ const Error404 = require('./components/pages/Error404.vue');
 const routeList = [
   { path: '/', component: Home },
   { path: '/partners', component: Partners },
+  { path: '/audiences', component: Audiences },
+  { path: '/audiences/:id', component: EditAudience },
+  { path: '/campaigns', component: Campaigns },
+  { path: '/campaigns/:id', component: EditCampaign },
   { path: '/partners/:id', component: EditPartner },
   { path: '/400', component: Error400 },
   { path: '*', component: Error404 }
@@ -47,7 +57,7 @@ const router = new VueRouter({
 
 window.app = new Vue({
     el: '#app',
-    component:["modal","alert","confirm","preloader"],
+    component:["modal","alert","confirm","preloader","mainnav"],
     router:router,
     methods:{
     	alert:function(event){
