@@ -22,9 +22,9 @@
                             </thead>
                             <tbody>
                             <tr v-for="item in list">
-                                <td>{{item.partner.abbr}}</td>
+                                <td>{{item.partner.abbr | uppercase}}</td>
                                 <td>{{item.name}}</td>
-                                <td>{{item.abbr}}</td>
+                                <td>{{item.abbr | uppercase}}</td>
                                 <td>
                                      <div class="btn-group btn-group-xs" role="group" aria-label="...">
                                         <a class="btn btn-default" :href="'#campaings/'+item.id" ><i class="fa fa-fw fa-edit"></i> Edit</a>

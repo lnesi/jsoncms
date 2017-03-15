@@ -17,6 +17,13 @@ export default {
                 singular: "entity",
             }
         },
+        filters:{
+            uppercase:function(value){
+                if (!value) return '';
+                value = value.toString();
+                return value.toUpperCase();
+            }
+        },
         methods: {
             load() {
                 this.$parent.$emit("SHOW_PRELOADER");
