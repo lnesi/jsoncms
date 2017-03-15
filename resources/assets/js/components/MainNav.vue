@@ -13,7 +13,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="#/">
-                        CMS
+                        JSON<small>cms</small>
                     </a>
                 </div>
 
