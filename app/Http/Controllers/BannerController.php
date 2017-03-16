@@ -14,7 +14,7 @@ class BannerController extends Controller
      */
     public function index(){
         //
-        return Banner::all();
+        return Banner::paginate();
     }
 
     /**

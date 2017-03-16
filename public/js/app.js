@@ -13332,14 +13332,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = {
+    created: function created() {
 
-  created: function created() {
-    this.resource_url = "ajax/banners{/id}";
-    this.singular = "Partner";
-    this.addObject = { name: "", abbr: "" };
-  },
+        this.provider = this.$resource("ajax/banners{/id}");
+        this.load();
+    },
 
-  methods: {}
+
+    data: function data() {
+        return {
+            list: [],
+            toDelete: null
+        };
+    },
+
+    methods: {
+        load: function load() {
+            var _this = this;
+
+            this.$parent.$emit("SHOW_PRELOADER");
+            this.provider.get().then(function (response) {
+                _this.list = response.body.data;
+                _this.$parent.$emit("HIDE_PRELOADER");
+            });
+        }
+    }
 };
 
 /***/ }),

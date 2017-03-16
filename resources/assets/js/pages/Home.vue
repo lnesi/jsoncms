@@ -45,14 +45,27 @@
 <script>
     export default {
       
-        created: function () {
-          this.resource_url="ajax/banners{/id}";
-          this.singular="Partner";
-          this.addObject={name:"",abbr:""}
+        created() {
+          
+          this.provider = this.$resource("ajax/banners{/id}");
+          this.load();
        },
+
+        data: function() {
+            return {
+                list: [],
+                toDelete: null,
+            }
+        },
         
         methods:{
-              
+             load() {
+                this.$parent.$emit("SHOW_PRELOADER");
+                this.provider.get().then(response => {
+                    this.list = response.body.data;
+                    this.$parent.$emit("HIDE_PRELOADER");
+                });
+            }, 
           
         }
     }
