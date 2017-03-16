@@ -5,7 +5,7 @@
               <div class="col-md-12 ">
                   <div class="panel panel-default">
                       <div class="panel-heading">
-                      <h2>Campaigns <small><button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#addAudienceModal"><i class="fa fa-fw fa-plus"></i> Add</button></small></h2>
+                      <h2><i class="lnr lnr-pushpin"></i>  Campaigns <small><button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#addAudienceModal"><i class="fa fa-fw fa-plus"></i> Add</button></small></h2>
                       
                       </div>
 
@@ -44,11 +44,11 @@
           <form slot="body">
               <div  :class="{'form-group': true, 'has-error': checkPartner }">
                 <label for="partner_id" class="control-label">Partner</label>
-                <ajax-dropdown data-url="api/partners?paginate=false" name="partner_id"  id="partner_id" v-model="addObject.partner_id"></ajax-dropdown>
+                <ajax-dropdown data-url="ajax/partners?paginate=false" name="partner_id"  id="partner_id" v-model="addObject.partner_id"></ajax-dropdown>
                 
               </div>
               <tbvue-input name="name" id="in_name" placeholder="Name" rules="required|max:100" v-model="addObject.name">Name</tbvue-input>
-              <tbvue-input name="name" id="in_abbr"  placeholder="abbr" rules="required|max:10" v-model="addObject.abbr">Abbreviation</tbvue-input>
+              <tbvue-input name="abbr" id="in_abbr"  placeholder="abbr" rules="required|max:10" v-model="addObject.abbr">Abbreviation</tbvue-input>
               
           </form>
           <button type="button" slot="footer" class="btn btn-default"  data-dismiss="modal">Cancel</button>
@@ -64,7 +64,7 @@
     export default {
         mixins: [crud_mix.default],
         created: function() {
-            this.resource_url = "api/campaings{/id}";
+            this.resource_url = "ajax/campaings{/id}";
             this.singular = "Campaign";
             this.addObject = { name: "", abbr: "", partner_id: "" }
         },

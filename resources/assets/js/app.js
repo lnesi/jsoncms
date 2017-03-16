@@ -61,12 +61,23 @@ const router = new VueRouter({
   routes:routeList
 });
 
+Vue.http.interceptors.push((request, next) => {
+    request.headers.set('X-CSRF-TOKEN', window.Laravel.csrfToken);
+    next();
+});
+
 
 
 window.app = new Vue({
     el: '#app',
     component:["modal","alert","confirm","preloader","mainnav","ajax-dropdown","tbvue-input"],
     router:router,
+    data(){
+      return {
+        user:{id:null,name:null},
+        is_logged:false
+      }
+    },
     methods:{
     	alert:function(event){
     		console.log("HI");
@@ -74,14 +85,27 @@ window.app = new Vue({
     },
     mounted(){
     	console.log("APP INIT");
-    	this.$router.beforeEach((to, from, next) => {
-		  this.$emit("SHOW_PRELOADER");
-		  next();
-		});
-		this.$router.afterEach((to, from) => {
-		  this.$emit("HIDE_PRELOADER");
-		});
-		this.$emit("HIDE_PRELOADER");
+
+      this.$router.beforeEach((to, from, next) => {
+  		  this.$emit("SHOW_PRELOADER");
+  		  next();
+  		});
+  		this.$router.afterEach((to, from) => {
+  		  this.$emit("HIDE_PRELOADER");
+  		});
+  		this.$emit("HIDE_PRELOADER");
+      this.loadUser();
+    },
+    methods:{
+      loadUser(){
+         this.$http.get("ajax/user").then(response => {
+            if(response.body){
+              this.user=response.body
+              this.is_logged=true;
+            }
+            
+         });
+      }
     }
 
 });

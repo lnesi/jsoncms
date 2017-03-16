@@ -11,16 +11,8 @@
                             <label for="partner_id" class="control-label">Partner</label>
                             <p>{{item.partner.name}}</p>
                           </div>
-                            <div  :class="{'form-group': true, 'has-error': errors.has('name') }">
-                                <label for="InputAddPartnerName" class="control-label">Name</label>
-                                <input type="text" v-model="item.name" v-validate="'required|max:100'" name="name" class="form-control" id="InputAddPartnerName" placeholder="Name">
-                                <p class="help-block">{{ errors.first('name') }}</p>
-                              </div>
-                              <div :class="{'form-group': true, 'has-error': errors.has('abbr') }">
-                                <label for="InputAddPartnerAbbr" class="control-label">Abbreviation</label>
-                                <input type="text" v-model="item.abbr" name="abbr" v-validate="'required|max:5'" class="form-control" id="InputAddPartnerAbbr" placeholder="abbr" >
-                                <p class="help-block">{{ errors.first('abbr') }}</p>
-                              </div>
+                           <tbvue-input name="name" id="in_name" placeholder="Name" rules="required|max:100" v-model="item.name">Name</tbvue-input>
+                           <tbvue-input name="name" id="in_abbr"  placeholder="abbr" rules="required|max:10" v-model="item.abbr">Abbreviation</tbvue-input>
                     
                     </div>
                     <div class="panel-footer">
@@ -39,7 +31,7 @@
     export default {
         mixins: [edit_mix.default],
         created: function () {
-          this.resource_url="api/audiences{/id}";
+          this.resource_url="ajax/audiences{/id}";
           this.singular="Audience";
 
        },

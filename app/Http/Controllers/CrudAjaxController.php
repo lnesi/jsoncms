@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
-class CrudApiController extends Controller{
+class CrudAjaxController extends Controller{
 
   protected $modelClass;
   /**

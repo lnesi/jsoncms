@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\CrudApiController;
 use App\Region;
 use App\Country;
-class RegionController extends CrudApiController
+class RegionController extends CrudAjaxController
 {
     //
     protected $modelClass=Region::class;

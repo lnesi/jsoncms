@@ -13,6 +13,7 @@
     <!-- Styles -->
     <script src="https://use.fontawesome.com/305feb8e9e.js"></script>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/linearicons.css') }}" rel="stylesheet">
 
     <!-- Scripts -->
     <script>
@@ -27,6 +28,7 @@
         <alert></alert>
         <confirm></confirm>
         <preloader></preloader>
+        
         @yield('content')
     </div>
 

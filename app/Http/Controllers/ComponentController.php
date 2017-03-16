@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\CrudApiController;
 use App\Component;
 
-class ComponentController extends CrudApiController
+class ComponentController extends CrudAjaxController
 {
    protected $modelClass=Component::class;
 }

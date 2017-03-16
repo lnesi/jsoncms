@@ -31,7 +31,7 @@
     export default {
         mixins: [edit_mix.default],
         created: function () {
-          this.resource_url="api/campaings{/id}";
+          this.resource_url="ajax/campaings{/id}";
           this.singular="Audience";
 
        },

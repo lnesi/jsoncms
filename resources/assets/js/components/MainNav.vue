@@ -13,36 +13,50 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="#/">
-                        JSON<small>cms</small>
+                        <i class="lnr lnr-database"></i> JSON<small>cms</small>
                     </a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Setup <span class="caret"></span></a>
-                          <ul class="dropdown-menu">
-                            <li><a href="#/campaings">Campaigns</a></li>
-                            <li><a href="#/audiences">Audiences</a></li>
-                            <li><a href="#/regions">Regions</a></li>
-                            
-                           
-                          </ul>
+                        <li class=""><a href="#/"><span class="lnr lnr-home"></span> Home</a></li>
+                        <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="lnr lnr-construction"></i> Setup <span class="caret"></span></a>
+                              <ul class="dropdown-menu">
+                                <li><a href="#/campaings"><i class="lnr lnr-pushpin"></i> Campaigns</a></li>
+                                <li><a href="#/audiences"><i class="lnr lnr-tag"></i> Audiences</a></li>
+                                <li><a href="#/regions"><i class="lnr lnr-earth"></i> Regions</a></li>
+                                
+                               
+                              </ul>
                         </li>
-                       <li class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">System <span class="caret"></span></a>
-                          <ul class="dropdown-menu">
-                            <li><a href="#/partners">Partners</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#/users">Users</a></li>
-                          </ul>
+                        <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="lnr lnr-cog"></i> System <span class="caret"></span></a>
+                              <ul class="dropdown-menu">
+                                <li><a href="#/partners"><i class="lnr lnr-apartment"></i> Partners</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#/users"><i class="lnr lnr-users"></i> Users</a></li>
+                              </ul>
                         </li>
                         
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                  
+                    <ul class="nav navbar-nav navbar-right">
+                          <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    <i class="lnr lnr-user"></i> {{ user.name }} <span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="/#" @click="logout"><i class="lnr lnr-exit"></i> Logout</a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                    </ul>
                 </div>
             </div>
         </nav>
@@ -50,8 +64,21 @@
 
 <script>
     export default {
-        mounted() {
-           
+        
+        computed: {
+           user(){
+                return this.$parent.user;
+           },
+
+        },
+        methods:{
+            logout(){
+                this.$http.post("/logout").then(response => {
+            
+                   window.location.href="/"
+                    
+                 });
+            }
         }
     }
 </script>

@@ -11,16 +11,9 @@
                             <label for="partner_id" class="control-label">Partner</label>
                             <p>{{item.partner.name}}</p>
                           </div>
-                            <div  :class="{'form-group': true, 'has-error': errors.has('name') }">
-                                <label for="InputAddPartnerName" class="control-label">Name</label>
-                                <input type="text" v-model="item.name" v-validate="'required|max:100'" name="name" class="form-control" id="InputAddPartnerName" placeholder="Name">
-                                <p class="help-block">{{ errors.first('name') }}</p>
-                              </div>
-                              <div :class="{'form-group': true, 'has-error': errors.has('abbr') }">
-                                <label for="InputAddPartnerAbbr" class="control-label">Abbreviation</label>
-                                <input type="text" v-model="item.abbr" name="abbr" v-validate="'required|max:10'" class="form-control" id="InputAddPartnerAbbr" placeholder="abbr" >
-                                <p class="help-block">{{ errors.first('abbr') }}</p>
-                              </div>
+                           
+                           <tbvue-input name="name" id="in_name" placeholder="Name" rules="required|max:100" v-model="item.name">Name</tbvue-input>
+                           <tbvue-input name="name" id="in_abbr"  placeholder="abbr" rules="required|max:10" v-model="item.abbr">Abbreviation</tbvue-input>
                             
                             <label for="" class="control-label">Countries</label>
                             <form class="form-inline">
@@ -62,7 +55,7 @@
     export default {
         mixins: [edit_mix.default],
         created: function () {
-          this.resource_url="api/regions{/id}";
+          this.resource_url="ajax/regions{/id}";
           this.singular="Region";
           
        },
@@ -96,7 +89,7 @@
           },
           addCountry(){
             if(this.countryToAdd!=""){
-              this.$http.get("api/regions/"+this.item.id+"/add/"+this.countryToAdd).then(response => {
+              this.$http.get("ajax/regions/"+this.item.id+"/add/"+this.countryToAdd).then(response => {
                 // get body data
                  this.item=response.body;
                  this.$parent.$emit("ALERT", "Ok!", "The country has been added successfully", "success", 3);
@@ -107,7 +100,7 @@
             }
           },
           removeCountryApi(id){
-              this.$http.get("api/regions/"+this.item.id+"/remove/"+id).then(response => {
+              this.$http.get("ajax/regions/"+this.item.id+"/remove/"+id).then(response => {
                 // get body data
                  this.item=response.body;
                  this.$parent.$emit("ALERT", "Ok!", "The country has been removed successfully", "success", 3);

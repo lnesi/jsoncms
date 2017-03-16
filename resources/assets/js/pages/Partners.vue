@@ -5,7 +5,7 @@
               <div class="col-md-12 ">
                   <div class="panel panel-default">
                       <div class="panel-heading">
-                      <h2>Partners <small><button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#addPartnerModal"><i class="fa fa-fw fa-plus"></i> Add</button></small></h2>
+                      <h2><i class="lnr lnr-apartment"></i> Partners <small><button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#addPartnerModal"><i class="fa fa-fw fa-plus"></i> Add</button></small></h2>
                       
                       </div>
 
@@ -41,16 +41,8 @@
       <modal id="addPartnerModal">
           <h4 class="modal-title" slot="header">Add Partner</h4>
           <form slot="body">
-              <div  :class="{'form-group': true, 'has-error': errors.has('name') }">
-                  <label for="InputAddPartnerName" class="control-label">Name</label>
-                  <input type="text" v-model="addObject.name" v-validate="'required|max:100'" name="name" class="form-control" id="InputAddPartnerName" placeholder="Name">
-                  <p class="help-block">{{ errors.first('name') }}</p>
-                </div>
-                <div :class="{'form-group': true, 'has-error': errors.has('abbr') }">
-                  <label for="InputAddPartnerAbbr" class="control-label">Abbreviation</label>
-                  <input type="text" v-model="addObject.abbr" name="abbr" v-validate="'required|max:5'" class="form-control" id="InputAddPartnerAbbr" placeholder="abbr" >
-                  <p class="help-block">{{ errors.first('abbr') }}</p>
-                </div>
+              <tbvue-input name="name" id="in_name" placeholder="Name" rules="required|max:100" v-model="addObject.name">Name</tbvue-input>
+              <tbvue-input name="abbr" id="in_abbr"  placeholder="abbr" rules="required|max:10" v-model="addObject.abbr">Abbreviation</tbvue-input>
           </form>
           <button type="button" slot="footer" class="btn btn-default"  data-dismiss="modal">Cancel</button>
           <button type="button" slot="footer" class="btn btn-success" :class="{'btn btn-success': true, 'disabled': errors.has('name') || errors.has('abbr') }" @click="validateAddForm"><i class="fa fa-fw fa-floppy-o" ></i> Save</button>
@@ -64,7 +56,7 @@
     export default {
         mixins: [crud_mix.default],
         created: function () {
-          this.resource_url="api/partners{/id}";
+          this.resource_url="ajax/partners{/id}";
           this.singular="Partner";
           this.addObject={name:"",abbr:""}
        },

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CrudApiController;
 use App\Campaign;
-class CampaignController extends CrudApiController
+class CampaignController extends CrudAjaxController
 {
     //
      protected $modelClass=Campaign::class;

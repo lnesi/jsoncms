@@ -13,7 +13,7 @@
     <!-- Styles -->
     <script src="https://use.fontawesome.com/305feb8e9e.js"></script>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
+    <link href="{{ asset('css/linearicons.css') }}" rel="stylesheet">
     <!-- Scripts -->
     <script>
         window.Laravel = {!! json_encode([
@@ -36,6 +36,6 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/auth.js') }}"></script>
 </body>
 </html>
