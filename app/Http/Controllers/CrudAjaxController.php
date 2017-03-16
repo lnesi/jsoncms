@@ -12,12 +12,28 @@ class CrudAjaxController extends Controller{
    * @return \Illuminate\Http\Response
    */
   public function index(){
-      if(isset($_GET['paginate']) && $_GET['paginate']=="false"){
-        $result=call_user_func($this->modelClass."::all");
-      }else{
-        $result=call_user_func($this->modelClass."::paginate");
+      $baseQuery=call_user_func($this->modelClass."::query");
+
+      if(isset($_GET['filter']) && trim($_GET['filter'])!=""){
+        $filters=$this->parseFilter($_GET['filter']);
+        foreach($filters as $filter){
+          $baseQuery=$baseQuery->where($filter[0],$filter[1]);
+        }
       }
-      
+
+      if(isset($_GET['orderby']) && trim($_GET['orderby'])!=""){
+           $direction="asc";
+           if(isset($_GET['direction']) && $_GET['direction']=="desc"){
+              $direction="desc";
+           }
+           $baseQuery->orderBy($_GET['orderby'],$direction);
+      }
+
+      if(isset($_GET['paginate']) && $_GET['paginate']=="false"){
+          $result=$baseQuery->get();
+      }else{
+          $result=$baseQuery->paginate(1);
+      }    
       return $result;
   }
 
@@ -67,6 +83,15 @@ class CrudAjaxController extends Controller{
     $item->delete();
     $response=['message'=>'ok'];
     return $response;
+  }
+
+  protected function parseFilter($filterString){
+      $filtersGroup=explode(":",$filterString);
+      $filters=[];
+      foreach($filtersGroup as $f){
+            $filters[]=explode(",",$f);
+      }
+      return $filters;
   }
 
 }

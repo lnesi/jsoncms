@@ -16,9 +16,9 @@
                            <tbvue-input name="name" id="in_abbr"  placeholder="abbr" rules="required|max:10" v-model="item.abbr">Abbreviation</tbvue-input>
                             
                             <label for="" class="control-label">Countries</label>
-                            <form class="form-inline">
-                                <ajax-dropdown data-url="ajax/countries?paginate=false" name="country_id"  id="country_id" v-model="countryToAdd"></ajax-dropdown>
-                                <button type="button" class="btn btn-default" :disabled="checkSelectedCountry" @click="addCountry()"><i class="fa fa-fw fa-plus"></i>Add Country</button>
+                            <form >
+                                <tbvue-ajax-dropdown data-url="ajax/countries?paginate=false" name="country_id"  id="country_id" v-model="countryToAdd"></tbvue-ajax-dropdown>
+                                <button type="button" class="btn btn-default" :disabled="checkSelectedCountry" @click="addCountry()"><i class="fa fa-fw fa-plus"></i>Add</button>
                             </form>
                             <br>
                             <table class="table table-striped table-bordered">

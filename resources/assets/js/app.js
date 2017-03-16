@@ -22,7 +22,7 @@ Vue.component('alert', require('./components/Alert.vue'))
 Vue.component('confirm', require('./components/Confirm.vue'));
 Vue.component('preloader', require('./components/Preloader.vue'));
 Vue.component('mainnav', require('./components/MainNav.vue'));
-Vue.component('ajax-dropdown', require('./components/AjaxDropdown.vue'));
+Vue.component('tbvue-ajax-dropdown', require('./components/tbvue_ajax_dropdown.vue'));
 Vue.component('tbvue-input', require('./components/tbvue_input.vue'));
 
 
@@ -37,6 +37,7 @@ const Campaigns = require('./pages/Campaigns.vue');
 const EditCampaign = require('./pages/EditCampaign.vue');
 const Regions = require('./pages/Regions.vue');
 const EditRegion = require('./pages/EditRegion.vue');
+const NewDelivery = require('./pages/NewDelivery.vue');
 
 const Error400 = require('./pages/Error400.vue');
 const Error404 = require('./pages/Error404.vue');
@@ -48,10 +49,11 @@ const routeList = [
   { path: '/partners/:id', component: EditPartner },
   { path: '/audiences', component: Audiences },
   { path: '/audiences/:id', component: EditAudience },
-  { path: '/campaings', component: Campaigns },
-  { path: '/campaings/:id', component: EditCampaign },
+  { path: '/campaigns', component: Campaigns },
+  { path: '/campaigns/:id', component: EditCampaign },
   { path: '/regions', component: Regions },
   { path: '/regions/:id', component: EditRegion },
+  { path: '/delivery/new', component: NewDelivery },
   { path: '/400', component: Error400 },
   { path: '*', component: Error404 }
 ]
@@ -70,7 +72,7 @@ Vue.http.interceptors.push((request, next) => {
 
 window.app = new Vue({
     el: '#app',
-    component:["modal","alert","confirm","preloader","mainnav","ajax-dropdown","tbvue-input"],
+    component:["modal","alert","confirm","preloader","mainnav","tbvue-ajax-dropdown","tbvue-input"],
     router:router,
     data(){
       return {

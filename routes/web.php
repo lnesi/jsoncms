@@ -19,7 +19,7 @@ Route::group(['prefix' => 'ajax','middleware' => 'auth'], function () {
 	Route::resource('partners', PartnerController::class,['except' => ['create', 'edit']]);
 	Route::resource('audiences', AudienceController::class,['except' => ['create', 'edit']]);
 	Route::resource('regions', RegionController::class,['except' => ['create', 'edit']]);
-	Route::resource('campaings', CampaignController::class,['except' => ['create', 'edit']]);
+	Route::resource('campaigns', CampaignController::class,['except' => ['create', 'edit']]);
 	Route::resource('deliveries', DeliveryController::class,['except' => ['create', 'edit']]);
 	//Read Only Resources
 	Route::resource('sizes', SizeController::class,['only' => [ 'index','show']]);

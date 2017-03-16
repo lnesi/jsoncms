@@ -24,7 +24,7 @@
                         <li class="dropdown">
                               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="lnr lnr-construction"></i> Setup <span class="caret"></span></a>
                               <ul class="dropdown-menu">
-                                <li><a href="#/campaings"><i class="lnr lnr-pushpin"></i> Campaigns</a></li>
+                                <li><a href="#/campaigns"><i class="lnr lnr-pushpin"></i> Campaigns</a></li>
                                 <li><a href="#/audiences"><i class="lnr lnr-tag"></i> Audiences</a></li>
                                 <li><a href="#/regions"><i class="lnr lnr-earth"></i> Regions</a></li>
                                 

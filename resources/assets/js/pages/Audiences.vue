@@ -42,11 +42,7 @@
       <modal id="addAudienceModal">
           <h4 class="modal-title" slot="header">Add Audience</h4>
           <form slot="body">
-              <div  :class="{'form-group': true, 'has-error': checkPartner }">
-                <label for="partner_id" class="control-label">Partner</label>
-                <ajax-dropdown data-url="ajax/partners?paginate=false" name="partner_id"  id="partner_id" v-model="addObject.partner_id"></ajax-dropdown>
-                
-              </div>
+              <tbvue-ajax-dropdown data-url="ajax/partners?paginate=false" name="partner_id" rules="required" id="partner_id" v-model="addObject.partner_id">Partner</tbvue-ajax-dropdown>
               <tbvue-input name="name" id="in_name" placeholder="Name" rules="required|max:100" v-model="addObject.name">Name</tbvue-input>
               <tbvue-input name="abbr" id="in_abbr"  placeholder="abbr" rules="required|max:10" v-model="addObject.abbr">Abbreviation</tbvue-input>
           </form>
@@ -66,11 +62,7 @@ export default {
         this.singular = "Audience";
         this.addObject = { name: "", abbr: "", partner_id: "" }
     },
-    computed: {
-        checkPartner() {
-            return this.addObject.partner_id == "";
-        }
-    },
+    
     methods: {
         
         validateAddForm() {
