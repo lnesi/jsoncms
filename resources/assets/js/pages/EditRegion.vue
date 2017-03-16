@@ -17,7 +17,7 @@
                             
                             <label for="" class="control-label">Countries</label>
                             <form class="form-inline">
-                                <ajax-dropdown data-url="api/countries?paginate=false" name="country_id"  id="country_id" v-model="countryToAdd"></ajax-dropdown>
+                                <ajax-dropdown data-url="ajax/countries?paginate=false" name="country_id"  id="country_id" v-model="countryToAdd"></ajax-dropdown>
                                 <button type="button" class="btn btn-default" :disabled="checkSelectedCountry" @click="addCountry()"><i class="fa fa-fw fa-plus"></i>Add Country</button>
                             </form>
                             <br>

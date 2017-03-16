@@ -1,10 +1,10 @@
 <?php namespace App\Observers;
 
-class BannerObserver{
+class DeliveryObserver{
 
-  public function saved($banner){
+  public function saved($delivery){
     $defaultContent=new \App\ContentSet(['name'=>'Default','rotation'=>100]);
-    $defaultContent->banner()->associate($banner);
+    $defaultContent->delivery()->associate($delivery);
     $defaultContent->save();
   }
 

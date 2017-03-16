@@ -21,8 +21,8 @@ class CustomValues extends Migration
             $table->binary('data');
             $table->softDeletes();
             $table->timestamps();
-            $table->foreign('set_id')->references('id')->on('banner_sets')->onDelete('cascade');
-            $table->foreign('custom_id')->references('id')->on('banner_customs')->onDelete('cascade');;
+            $table->foreign('set_id')->references('id')->on('delivery_sets')->onDelete('cascade');
+            $table->foreign('custom_id')->references('id')->on('delivery_customs')->onDelete('cascade');;
         });
     }
 

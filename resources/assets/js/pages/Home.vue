@@ -14,18 +14,27 @@
                         <table class="table table-striped table-bordered">
                             <thead>
                             <tr>
+                              <th>Partner</th>
+                              <th>Campaign</th>
+                              <th>Audience</th>
+                              <th>Region</th>
                               <th>Name</th>
-                            
+                             
                               <th>Actions</th>
                               </tr>
                             </thead>
                             <tbody>
                             <tr v-for="item in list">
+                                <td>{{item.partner.abbr|uppercase}}</td>
+                                <td>{{item.campaign.abbr|uppercase}}</td>
+                                <td>{{item.audience.abbr|uppercase}}</td>
+                                <td>{{item.region.abbr|uppercase}}</td>
+
                                 <td>{{item.name}}</td>
                                
                                 <td>
                                      <div class="btn-group btn-group-xs" role="group" aria-label="...">
-                                        <a class="btn btn-default" :href="'#partners/'+item.id" ><i class="fa fa-fw fa-edit"></i> Edit</a>
+                                        <a class="btn btn-default" :href="'#deliveries/'+item.id" ><i class="fa fa-fw fa-edit"></i> Edit</a>
                                         <button type="button" class="btn btn-default" @click="trash(item)"><i class="fa fa-fw fa-trash"></i> Delete</button>
                                      </div>
                                 </td>
@@ -47,7 +56,7 @@
       
         created() {
           
-          this.provider = this.$resource("ajax/banners{/id}");
+          this.provider = this.$resource("ajax/deliveries{/id}");
           this.load();
        },
 
@@ -57,12 +66,19 @@
                 toDelete: null,
             }
         },
-        
+        filters:{
+            uppercase:function(value){
+                if (!value) return '';
+                value = value.toString();
+                return value.toUpperCase();
+            }
+        },
         methods:{
              load() {
                 this.$parent.$emit("SHOW_PRELOADER");
                 this.provider.get().then(response => {
                     this.list = response.body.data;
+                    console.log(this.list);
                     this.$parent.$emit("HIDE_PRELOADER");
                 });
             }, 

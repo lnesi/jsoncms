@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BannerType extends Model
+class DeliveryType extends Model
 {
     //
-    protected $table = 'banner_types';
+    protected $table = 'delivery_types';
     public $timestamps = false;
 }

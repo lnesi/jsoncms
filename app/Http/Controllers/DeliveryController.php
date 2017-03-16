@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Banner;
+use App\Delivery;
 
-class BannerController extends Controller
+class DeliveryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class BannerController extends Controller
      */
     public function index(){
         //
-        return Banner::paginate();
+        return Delivery::paginate();
     }
 
     /**
@@ -47,7 +47,7 @@ class BannerController extends Controller
     public function show($id)
     {
         //
-        return Banner::findOrFail($id);
+        return Delivery::findOrFail($id);
     }
 
     /**

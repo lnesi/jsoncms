@@ -14,13 +14,13 @@ class FixStatusDefaults extends Migration
     public function up()
     {
         //
-        Schema::table('banners',function(Blueprint $table){
+        Schema::table('deliveries',function(Blueprint $table){
           $table->integer('status_id')->unsigned()->default(1)->after('audience_id');
           $table->foreign('status_id')->references('id')->on('status');
           $table->integer('type_id')->unsigned()->default(1)->change();
         });
 
-        Schema::table('banner_sets',function(Blueprint $table){
+        Schema::table('delivery_sets',function(Blueprint $table){
           $table->integer('status_id')->unsigned()->default(1)->change();
         });
     }

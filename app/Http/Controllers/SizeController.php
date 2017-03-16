@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\CrudApiController;
-use App\BannerSize;
+use App\DeliverySize;
 class SizeController extends CrudAjaxController
 {
-    protected $modelClass=BannerSize::class;
+    protected $modelClass=DeliverySize::class;
 }

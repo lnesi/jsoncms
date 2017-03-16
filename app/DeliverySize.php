@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BannerSize extends Model
+class DeliverySize extends Model
 {
     //
-    protected $table = 'banner_sizes';
+    protected $table = 'delivery_sizes';
     public $timestamps = false;
 
 }

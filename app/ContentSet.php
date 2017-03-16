@@ -9,11 +9,11 @@ class ContentSet extends Model
 {
     //
     use SoftDeletes;
-    protected $table = 'banner_sets';
+    protected $table = 'delivery_sets';
     protected $dates = ['deleted_at','created_at','updated_at','published_at'];
     protected $fillable=['name','rotation'];
-    public function banner(){
-    	return $this->belongsTo(Banner::class,'banner_id');
+    public function delivery(){
+    	return $this->belongsTo(Delivery::class,'delivery_id');
     }
 
     public function status(){

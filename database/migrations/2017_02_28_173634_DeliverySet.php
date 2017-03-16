@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class BannerSet extends Migration
+class DeliverySet extends Migration
 {
     /**
      * Run the migrations.
@@ -25,15 +25,15 @@ class BannerSet extends Migration
         });
         
 
-        Schema::create('banner_sets',function(Blueprint $table){
+        Schema::create('delivery_sets',function(Blueprint $table){
             $table->increments('id');
-            $table->integer('banner_id')->unsigned();
+            $table->integer('delivery_id')->unsigned();
             $table->string('name');
             $table->integer('status_id')->unsigned();
             $table->unsignedSmallInteger('rotation');
             $table->softDeletes();
             $table->timestamps();
-            $table->foreign('banner_id')->references('id')->on('banners')->onDelete('cascade');
+            $table->foreign('delivery_id')->references('id')->on('deliveries')->onDelete('cascade');
             $table->foreign('status_id')->references('id')->on('status');
 
         });
@@ -47,7 +47,7 @@ class BannerSet extends Migration
     public function down()
     {
         //
-        Schema::dropIfExists('banner_sets');
+        Schema::dropIfExists('delivery_sets');
         Schema::dropIfExists('status');
     }
 }

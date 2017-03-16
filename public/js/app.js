@@ -13330,11 +13330,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     created: function created() {
 
-        this.provider = this.$resource("ajax/banners{/id}");
+        this.provider = this.$resource("ajax/deliveries{/id}");
         this.load();
     },
 
@@ -13345,7 +13354,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             toDelete: null
         };
     },
-
+    filters: {
+        uppercase: function uppercase(value) {
+            if (!value) return '';
+            value = value.toString();
+            return value.toUpperCase();
+        }
+    },
     methods: {
         load: function load() {
             var _this = this;
@@ -13353,6 +13368,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$parent.$emit("SHOW_PRELOADER");
             this.provider.get().then(function (response) {
                 _this.list = response.body.data;
+                console.log(_this.list);
                 _this.$parent.$emit("HIDE_PRELOADER");
             });
         }
@@ -37575,7 +37591,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "form-inline"
   }, [_c('ajax-dropdown', {
     attrs: {
-      "data-url": "api/countries?paginate=false",
+      "data-url": "ajax/countries?paginate=false",
       "name": "country_id",
       "id": "country_id"
     },
@@ -38300,7 +38316,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('table', {
     staticClass: "table table-striped table-bordered"
   }, [_vm._m(1), _vm._v(" "), _c('tbody', _vm._l((_vm.list), function(item) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c('td', [_c('div', {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(_vm._f("uppercase")(item.partner.abbr)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("uppercase")(item.campaign.abbr)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("uppercase")(item.audience.abbr)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("uppercase")(item.region.abbr)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c('td', [_c('div', {
       staticClass: "btn-group btn-group-xs",
       attrs: {
         "role": "group",
@@ -38309,7 +38325,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_c('a', {
       staticClass: "btn btn-default",
       attrs: {
-        "href": '#partners/' + item.id
+        "href": '#deliveries/' + item.id
       }
     }, [_c('i', {
       staticClass: "fa fa-fw fa-edit"
@@ -38342,7 +38358,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "fa fa-fw fa-plus"
   }), _vm._v(" New")])])])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('tr', [_c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Actions")])])])
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("Partner")]), _vm._v(" "), _c('th', [_vm._v("Campaign")]), _vm._v(" "), _c('th', [_vm._v("Audience")]), _vm._v(" "), _c('th', [_vm._v("Region")]), _vm._v(" "), _c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Actions")])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {

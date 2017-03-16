@@ -14,10 +14,10 @@ class AddPublishedAt extends Migration
     public function up()
     {
         //
-        Schema::table('banners',function(Blueprint $table){
+        Schema::table('deliveries',function(Blueprint $table){
           $table->timestamp('published_at')->nullable()->after('updated_at');
         });
-        Schema::table('banner_sets',function(Blueprint $table){
+        Schema::table('delivery_sets',function(Blueprint $table){
           $table->timestamp('published_at')->nullable()->after('updated_at');
         });
     }

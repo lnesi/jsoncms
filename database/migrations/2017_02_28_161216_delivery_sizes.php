@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class BannerSizes extends Migration
+class DeliverySizes extends Migration
 {
     /**
      * Run the migrations.
@@ -14,17 +14,17 @@ class BannerSizes extends Migration
     public function up()
     {
         //
-        Schema::create('banner_sizes',function(Blueprint $table){
+        Schema::create('delivery_sizes',function(Blueprint $table){
             $table->increments('id');
             $table->string('name',100);
             $table->string('abbr',10);
             $table->unsignedSmallInteger('width');
             $table->unsignedSmallInteger('height');
         });
-         Schema::table('banner_sizes',function(Blueprint $table){
-            $sql="INSERT INTO banner_sizes(name,abbr,width,height) VALUES('MPU','MPU',300,250);
-                  INSERT INTO banner_sizes(name,abbr,width,height) VALUES('Half Page','HALFPAGE',300,600);
-                  INSERT INTO banner_sizes(name,abbr,width,height) VALUES('Billboard','BILLBOARD',970,250);";
+         Schema::table('delivery_sizes',function(Blueprint $table){
+            $sql="INSERT INTO delivery_sizes(name,abbr,width,height) VALUES('MPU','MPU',300,250);
+                  INSERT INTO delivery_sizes(name,abbr,width,height) VALUES('Half Page','HALFPAGE',300,600);
+                  INSERT INTO delivery_sizes(name,abbr,width,height) VALUES('Billboard','BILLBOARD',970,250);";
             DB::connection()->getPdo()->exec($sql);
         });
     }
@@ -37,6 +37,6 @@ class BannerSizes extends Migration
     public function down()
     {
         //
-        Schema::dropIfExists('banner_sizes');
+        Schema::dropIfExists('delivery_sizes');
     }
 }
