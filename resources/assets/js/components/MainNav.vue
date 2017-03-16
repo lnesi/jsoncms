@@ -51,7 +51,7 @@
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
-                                        <a href="/#" @click="logout"><i class="lnr lnr-exit"></i> Logout</a>
+                                        <a @click="logout"><i class="lnr lnr-exit"></i> Logout</a>
                                     </li>
                                 </ul>
                             </li>

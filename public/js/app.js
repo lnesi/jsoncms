@@ -13302,9 +13302,44 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
-   mounted: function mounted() {}
+
+  created: function created() {
+    this.resource_url = "ajax/banners{/id}";
+    this.singular = "Partner";
+    this.addObject = { name: "", abbr: "" };
+  },
+
+  methods: {}
 };
 
 /***/ }),
@@ -36982,9 +37017,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "role": "menu"
     }
   }, [_c('li', [_c('a', {
-    attrs: {
-      "href": "/#"
-    },
     on: {
       "click": _vm.logout
     }
@@ -38238,9 +38270,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
+  return _c('div', [_c('div', {
     staticClass: "container"
   }, [_c('div', {
     staticClass: "row"
@@ -38248,11 +38278,54 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-md-12 "
   }, [_c('div', {
     staticClass: "panel panel-default"
-  }, [_c('div', {
-    staticClass: "panel-heading"
-  }, [_vm._v("Home")]), _vm._v(" "), _c('div', {
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
     staticClass: "panel-body"
-  }, [_vm._v("\n                    I'm an example component!\n                ")])])])])])
+  }, [_c('table', {
+    staticClass: "table table-striped table-bordered"
+  }, [_vm._m(1), _vm._v(" "), _c('tbody', _vm._l((_vm.list), function(item) {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c('td', [_c('div', {
+      staticClass: "btn-group btn-group-xs",
+      attrs: {
+        "role": "group",
+        "aria-label": "..."
+      }
+    }, [_c('a', {
+      staticClass: "btn btn-default",
+      attrs: {
+        "href": '#partners/' + item.id
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-fw fa-edit"
+    }), _vm._v(" Edit")]), _vm._v(" "), _c('button', {
+      staticClass: "btn btn-default",
+      attrs: {
+        "type": "button"
+      },
+      on: {
+        "click": function($event) {
+          _vm.trash(item)
+        }
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-fw fa-trash"
+    }), _vm._v(" Delete")])])])])
+  }))])])])])])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "panel-heading"
+  }, [_c('h2', [_c('i', {
+    staticClass: "lnr lnr-code"
+  }), _vm._v("  JSON"), _c('small', [_vm._v("Deliverys"), _c('a', {
+    staticClass: "btn btn-default pull-right",
+    attrs: {
+      "type": "button",
+      "href": "#/new"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-fw fa-plus"
+  }), _vm._v(" New")])])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Actions")])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
