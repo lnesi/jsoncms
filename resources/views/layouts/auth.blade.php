@@ -27,7 +27,7 @@
             <div class="row">
                 <div class="col col-md-8 col-md-offset-2 text-center">
                 <p>&nbsp;</p>
-                 <h1><i class="lnr lnr-database"></i> JSON<small>cms</small></h1>
+                 <h1><i class="lnr lnr-code"></i> JSON<small>cms</small></h1>
                  <p>&nbsp;</p>
                 </div>
             </div>

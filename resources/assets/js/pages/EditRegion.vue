@@ -15,9 +15,10 @@
                            <tbvue-input name="name" id="in_name" placeholder="Name" rules="required|max:100" v-model="item.name">Name</tbvue-input>
                            <tbvue-input name="name" id="in_abbr"  placeholder="abbr" rules="required|max:10" v-model="item.abbr">Abbreviation</tbvue-input>
                             
-                            <label for="" class="control-label">Countries</label>
+                           
+                            <hr>
                             <form >
-                                <tbvue-ajax-dropdown data-url="ajax/countries?paginate=false" name="country_id"  id="country_id" v-model="countryToAdd"></tbvue-ajax-dropdown>
+                                <tbvue-ajax-dropdown data-url="ajax/countries?paginate=false" name="country_id"  id="country_id" v-model="countryToAdd">Countries</tbvue-ajax-dropdown>
                                 <button type="button" class="btn btn-default" :disabled="checkSelectedCountry" @click="addCountry()"><i class="fa fa-fw fa-plus"></i>Add</button>
                             </form>
                             <br>

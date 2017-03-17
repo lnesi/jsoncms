@@ -78,7 +78,6 @@
                 this.$parent.$emit("SHOW_PRELOADER");
                 this.provider.get().then(response => {
                     this.list = response.body.data;
-                    console.log(this.list);
                     this.$parent.$emit("HIDE_PRELOADER");
                 });
             }, 

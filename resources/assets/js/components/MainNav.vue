@@ -13,7 +13,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="#/">
-                        <i class="lnr lnr-database"></i> JSON<small>cms</small>
+                        <i class="lnr lnr-code"></i> JSON<small>cms</small>
                     </a>
                 </div>
 
@@ -22,7 +22,7 @@
                     <ul class="nav navbar-nav">
                         <li class=""><a href="#/"><span class="lnr lnr-home"></span> Home</a></li>
                         <li class="dropdown">
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="lnr lnr-construction"></i> Setup <span class="caret"></span></a>
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="lnr lnr-layers"></i> Setup <span class="caret"></span></a>
                               <ul class="dropdown-menu">
                                 <li><a href="#/campaigns"><i class="lnr lnr-pushpin"></i> Campaigns</a></li>
                                 <li><a href="#/audiences"><i class="lnr lnr-tag"></i> Audiences</a></li>
