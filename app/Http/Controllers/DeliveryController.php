@@ -5,17 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Delivery;
 
-class DeliveryController extends Controller
+class DeliveryController extends ReadAjaxController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(){
-        //
-        return Delivery::paginate();
-    }
+   
+    protected $modelClass=\App\Delivery::class;
 
     /**
      * Show the form for creating a new resource.
@@ -36,18 +29,6 @@ class DeliveryController extends Controller
     public function store(Request $request)
     {
         //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-        return Delivery::findOrFail($id);
     }
 
     /**

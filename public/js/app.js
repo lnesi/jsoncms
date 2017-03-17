@@ -11236,64 +11236,68 @@ module.exports = g;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+var list_mix = __webpack_require__(117).default;
 /* harmony default export */ __webpack_exports__["default"] = {
+    mixins: [list_mix],
     mounted: function mounted() {
-        this.provider = this.$resource(this.resource_url);
+
         this.$on('OK_TO_DELETE', function () {
             if (this.toDelete != null) {
                 this.delete(this.toDelete.id);
                 this.toDelete = null;
             }
         }.bind(this));
-        this.load();
     },
+
 
     data: function data() {
         return {
-            list: [],
             addObject: {},
             toDelete: null,
-            singular: "entity"
+            singular: "entity",
+            errors: [],
+            validator: null
         };
     },
-    filters: {
-        uppercase: function uppercase(value) {
-            if (!value) return '';
-            value = value.toString();
-            return value.toUpperCase();
+
+    watch: {
+        addObject: {
+            handler: function handler() {
+                this.validator.validateAll(this.addObject).then(function () {}).catch(function () {});
+                this.$set(this, 'errors', this.validator.errorBag);
+            },
+            deep: true
         }
     },
+
+    computed: {
+        hasValidateErrors: function hasValidateErrors() {
+            return this.errors.count() > 0;
+        }
+    },
+
     methods: {
-        load: function load() {
+        delete: function _delete(id) {
             var _this = this;
 
             this.$parent.$emit("SHOW_PRELOADER");
-            this.provider.get().then(function (response) {
-                _this.list = response.body.data;
-                _this.$parent.$emit("HIDE_PRELOADER");
-            });
-        },
-        delete: function _delete(id) {
-            var _this2 = this;
-
-            this.$parent.$emit("SHOW_PRELOADER");
             this.provider.delete({ id: id }).then(function (response) {
-                _this2.$parent.$emit("HIDE_PRELOADER");
-                _this2.$parent.$emit("ALERT", "Ok!", "The " + _this2.singular + " has been deleted successfully", "warning", 3);
-                _this2.load();
+                _this.$parent.$emit("HIDE_PRELOADER");
+                _this.$parent.$emit("ALERT", "Ok!", "The " + _this.singular + " has been deleted successfully", "warning", 3);
+                _this.load();
             }, function (response) {
-                console.log("errorAdding");
+                console.log("errorDeleting");
             });
         },
         add: function add() {
-            var _this3 = this;
+            var _this2 = this;
 
             this.$parent.$emit("SHOW_PRELOADER");
             this.provider.save(this.addObject).then(function (response) {
-                _this3.$parent.$emit("HIDE_PRELOADER");
-                _this3.load();
-                _this3.$parent.$emit("ALERT", "Ok!", "The " + _this3.singular + " has been created successfully", "success", 3);
+                _this2.$parent.$emit("HIDE_PRELOADER");
+                _this2.load();
+                _this2.$parent.$emit("ALERT", "Ok!", "The " + _this2.singular + " has been created successfully", "success", 3);
             }, function (response) {
                 console.log("errorAdding");
             });
@@ -11301,9 +11305,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         trash: function trash(item) {
             this.toDelete = item;
             this.$parent.$emit("CONFIRM", "Attention!", "Are you sure you want to delete the " + this.singular + ": <strong>" + item.name + "</strong>?", this, "OK_TO_DELETE");
+        },
+        validate: function validate() {
+            var _this3 = this;
+
+            this.validator.validateAll(this.addObject).then(function (result) {
+                _this3.add();
+                $('#addModal').modal('hide');
+                _this3.reset();
+            }).catch(function () {
+                return null;
+            });
+            this.$set(this, 'errors', this.validator.errorBag);
+        },
+        reset: function reset() {
+            Object.keys(this.addObject).forEach(function (element) {
+                this.addObject[element] = "";
+            }.bind(this));
         }
     }
 };
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 12 */
@@ -48489,7 +48511,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
@@ -48553,37 +48575,24 @@ var crud_mix = __webpack_require__(11);
         this.resource_url = "ajax/audiences{/id}";
         this.singular = "Audience";
         this.addObject = { name: "", abbr: "", partner_id: "" };
-    },
+        this.validator = new VeeValidate.Validator();
 
-    methods: {
-        validateAddForm: function validateAddForm() {
-            var _this = this;
+        this.validator.attach('partner_id', 'required|numeric', { prettyName: 'Partner' });
+        this.validator.attach('name', 'required|max:100', { prettyName: 'Name' });
+        this.validator.attach('abbr', 'required|max:10', { prettyName: 'Abbreviation' });
 
-            this.$validator.validateAll().then(function (result) {
-                if (_this.addObject.partner_id != "") {
-                    _this.add();
-                    $('#addAudienceModal').modal('hide');
-                    _this.resetAdd();
-                }
-            }).catch(function () {
-                return null;
-            });
-        },
-        resetAdd: function resetAdd() {
-            this.addObject = { name: "", abbr: "", partner_id: "" };
-        }
+        this.validator.validateAll(this.addObject).then(function () {}).catch(function () {});
+        this.$set(this, 'errors', this.validator.errorBag);
     }
 
 };
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 52 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
@@ -48648,28 +48657,18 @@ var crud_mix = __webpack_require__(11);
         this.resource_url = "ajax/campaigns{/id}";
         this.singular = "Campaign";
         this.addObject = { name: "", abbr: "", partner_id: "" };
-    },
-    methods: {
-        validateAddForm: function validateAddForm() {
-            var _this = this;
 
-            this.$validator.validateAll().then(function (result) {
-                if (_this.addObject.partner_id != "") {
-                    _this.add();
-                    $('#addAudienceModal').modal('hide');
-                    _this.resetAdd();
-                }
-            }).catch(function () {
-                return null;
-            });
-        },
-        resetAdd: function resetAdd() {
-            this.addObject = { name: "", abbr: "", partner_id: "" };
-        }
+        this.validator = new VeeValidate.Validator();
+
+        this.validator.attach('partner_id', 'required|numeric', { prettyName: 'Partner' });
+        this.validator.attach('name', 'required|max:100', { prettyName: 'Name' });
+        this.validator.attach('abbr', 'required|max:10', { prettyName: 'Abbreviation' });
+
+        this.validator.validateAll(this.addObject).then(function () {}).catch(function () {});
+        this.$set(this, 'errors', this.validator.errorBag);
     }
 
 };
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 53 */
@@ -49048,38 +49047,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+var list_mix = __webpack_require__(117).default;
 /* harmony default export */ __webpack_exports__["default"] = {
+    mixins: [list_mix],
     created: function created() {
-
-        this.provider = this.$resource("ajax/deliveries{/id}");
-        this.load();
+        this.resource_url = "ajax/deliveries{/id}";
     },
 
 
     data: function data() {
         return {
-            list: [],
             toDelete: null
         };
-    },
-    filters: {
-        uppercase: function uppercase(value) {
-            if (!value) return '';
-            value = value.toString();
-            return value.toUpperCase();
-        }
-    },
-    methods: {
-        load: function load() {
-            var _this = this;
-
-            this.$parent.$emit("SHOW_PRELOADER");
-            this.provider.get().then(function (response) {
-                _this.list = response.body.data;
-                _this.$parent.$emit("HIDE_PRELOADER");
-            });
-        }
     }
+
 };
 
 /***/ }),
@@ -49222,7 +49203,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
@@ -49277,43 +49258,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
-var crud_mix = __webpack_require__(11);
+var crud_mix = __webpack_require__(11).default;
 /* harmony default export */ __webpack_exports__["default"] = {
-    mixins: [crud_mix.default],
+    mixins: [crud_mix],
     created: function created() {
         this.resource_url = "ajax/partners{/id}";
         this.singular = "Partner";
         this.addObject = { name: "", abbr: "" };
-    },
+        this.validator = new VeeValidate.Validator();
+        this.validator.attach('name', 'required|max:100', { prettyName: 'Name' });
+        this.validator.attach('abbr', 'required|max:10', { prettyName: 'Abbreviation' });
 
-    methods: {
-        validateAddForm: function validateAddForm() {
-            var _this = this;
-
-            this.$validator.validateAll().then(function (result) {
-                _this.add();
-                $('#addPartnerModal').modal('hide');
-                _this.resetAdd();
-            }).catch(function () {
-                return null;
-            });
-        },
-        resetAdd: function resetAdd() {
-            this.addObject = { name: "", abbr: "" };
-        }
+        this.validator.validateAll(this.addObject).then(function () {}).catch(function () {});
+        this.$set(this, 'errors', this.validator.errorBag);
     }
+
 };
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 62 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
@@ -49376,29 +49343,18 @@ var crud_mix = __webpack_require__(11);
         this.resource_url = "ajax/regions{/id}";
         this.singular = "Region";
         this.addObject = { name: "", abbr: "", partner_id: "" };
-    },
 
-    methods: {
-        validateAddForm: function validateAddForm() {
-            var _this = this;
+        this.validator = new VeeValidate.Validator();
 
-            this.$validator.validateAll().then(function (result) {
-                if (_this.addObject.partner_id != "") {
-                    _this.add();
-                    $('#addAudienceModal').modal('hide');
-                    _this.resetAdd();
-                }
-            }).catch(function () {
-                return null;
-            });
-        },
-        resetAdd: function resetAdd() {
-            this.addObject = { name: "", abbr: "", partner_id: "" };
-        }
+        this.validator.attach('partner_id', 'required|numeric', { prettyName: 'Partner' });
+        this.validator.attach('name', 'required|max:100', { prettyName: 'Name' });
+        this.validator.attach('abbr', 'required|max:10', { prettyName: 'Abbreviation' });
+
+        this.validator.validateAll(this.addObject).then(function () {}).catch(function () {});
+        this.$set(this, 'errors', this.validator.errorBag);
     }
 
 };
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 63 */
@@ -50650,7 +50606,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel-body"
   }, [_c('table', {
     staticClass: "table table-striped table-bordered"
-  }, [_vm._m(1), _vm._v(" "), _c('tbody', _vm._l((_vm.list), function(item) {
+  }, [_vm._m(1), _vm._v(" "), _c('tbody', _vm._l((_vm.list.data), function(item) {
     return _c('tr', [_c('td', [_vm._v(_vm._s(_vm._f("uppercase")(item.partner.abbr)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("uppercase")(item.abbr)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(item.countries.length))]), _vm._v(" "), _c('td', [_c('div', {
       staticClass: "btn-group btn-group-xs",
       attrs: {
@@ -50679,7 +50635,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }), _vm._v(" Delete")])])])])
   }))])])])])])]), _vm._v(" "), _c('modal', {
     attrs: {
-      "id": "addAudienceModal"
+      "id": "addModal"
     }
   }, [_c('h4', {
     staticClass: "modal-title",
@@ -50735,13 +50691,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Cancel")]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-success",
     class: {
-      'btn btn-success': true, 'disabled': _vm.errors.has('name') || _vm.errors.has('abbr')
+      'btn btn-success': true, 'disabled': _vm.hasValidateErrors
     },
     attrs: {
       "type": "button"
     },
     on: {
-      "click": _vm.validateAddForm
+      "click": _vm.validate
     },
     slot: "footer"
   }, [_c('i', {
@@ -50757,7 +50713,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "type": "button",
       "data-toggle": "modal",
-      "data-target": "#addAudienceModal"
+      "data-target": "#addModal"
     }
   }, [_c('i', {
     staticClass: "fa fa-fw fa-plus"
@@ -51137,7 +51093,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel-body"
   }, [_c('table', {
     staticClass: "table table-striped table-bordered"
-  }, [_vm._m(1), _vm._v(" "), _c('tbody', _vm._l((_vm.list), function(item) {
+  }, [_vm._m(1), _vm._v(" "), _c('tbody', _vm._l((_vm.list.data), function(item) {
     return _c('tr', [_c('td', [_vm._v(_vm._s(_vm._f("uppercase")(item.partner.abbr)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("uppercase")(item.abbr)))]), _vm._v(" "), _c('td', [_c('div', {
       staticClass: "btn-group btn-group-xs",
       attrs: {
@@ -51166,7 +51122,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }), _vm._v(" Delete")])])])])
   }))])])])])])]), _vm._v(" "), _c('modal', {
     attrs: {
-      "id": "addAudienceModal"
+      "id": "addModal"
     }
   }, [_c('h4', {
     staticClass: "modal-title",
@@ -51222,13 +51178,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Cancel")]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-success",
     class: {
-      'btn btn-success': true, 'disabled': _vm.errors.has('name') || _vm.errors.has('abbr')
+      'btn btn-success': true, 'disabled': _vm.hasValidateErrors
     },
     attrs: {
       "type": "button"
     },
     on: {
-      "click": _vm.validateAddForm
+      "click": _vm.validate
     },
     slot: "footer"
   }, [_c('i', {
@@ -51244,7 +51200,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "type": "button",
       "data-toggle": "modal",
-      "data-target": "#addAudienceModal"
+      "data-target": "#addModal"
     }
   }, [_c('i', {
     staticClass: "fa fa-fw fa-plus"
@@ -51568,7 +51524,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel-body"
   }, [_c('table', {
     staticClass: "table table-striped table-bordered"
-  }, [_vm._m(1), _vm._v(" "), _c('tbody', _vm._l((_vm.list), function(item) {
+  }, [_vm._m(1), _vm._v(" "), _c('tbody', _vm._l((_vm.list.data), function(item) {
     return _c('tr', [_c('td', [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("uppercase")(item.abbr)))]), _vm._v(" "), _c('td', [_c('div', {
       staticClass: "btn-group btn-group-xs",
       attrs: {
@@ -51597,7 +51553,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }), _vm._v(" Delete")])])])])
   }))])])])])])]), _vm._v(" "), _c('modal', {
     attrs: {
-      "id": "addPartnerModal"
+      "id": "addModal"
     }
   }, [_c('h4', {
     staticClass: "modal-title",
@@ -51640,13 +51596,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Cancel")]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-success",
     class: {
-      'btn btn-success': true, 'disabled': _vm.errors.has('name') || _vm.errors.has('abbr')
+      'btn btn-success': true, 'disabled': _vm.hasValidateErrors
     },
     attrs: {
       "type": "button"
     },
     on: {
-      "click": _vm.validateAddForm
+      "click": _vm.validate
     },
     slot: "footer"
   }, [_c('i', {
@@ -51662,7 +51618,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "type": "button",
       "data-toggle": "modal",
-      "data-target": "#addPartnerModal"
+      "data-target": "#addModal"
     }
   }, [_c('i', {
     staticClass: "fa fa-fw fa-plus"
@@ -51719,7 +51675,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel-body"
   }, [_c('table', {
     staticClass: "table table-striped table-bordered"
-  }, [_vm._m(1), _vm._v(" "), _c('tbody', _vm._l((_vm.list), function(item) {
+  }, [_vm._m(1), _vm._v(" "), _c('tbody', _vm._l((_vm.list.data), function(item) {
     return _c('tr', [_c('td', [_vm._v(_vm._s(_vm._f("uppercase")(item.partner.abbr)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("uppercase")(item.campaign.abbr)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("uppercase")(item.audience.abbr)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("uppercase")(item.region.abbr)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c('td', [_c('div', {
       staticClass: "btn-group btn-group-xs",
       attrs: {
@@ -51789,7 +51745,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel-body"
   }, [_c('table', {
     staticClass: "table table-striped table-bordered"
-  }, [_vm._m(1), _vm._v(" "), _c('tbody', _vm._l((_vm.list), function(item) {
+  }, [_vm._m(1), _vm._v(" "), _c('tbody', _vm._l((_vm.list.data), function(item) {
     return _c('tr', [_c('td', [_vm._v(_vm._s(_vm._f("uppercase")(item.partner.abbr)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("uppercase")(item.abbr)))]), _vm._v(" "), _c('td', [_c('div', {
       staticClass: "btn-group btn-group-xs",
       attrs: {
@@ -51818,7 +51774,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }), _vm._v(" Delete")])])])])
   }))])])])])])]), _vm._v(" "), _c('modal', {
     attrs: {
-      "id": "addAudienceModal"
+      "id": "addModal"
     }
   }, [_c('h4', {
     staticClass: "modal-title",
@@ -51874,13 +51830,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Cancel")]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-success",
     class: {
-      'btn btn-success': true, 'disabled': _vm.errors.has('name') || _vm.errors.has('abbr')
+      'btn btn-success': true, 'disabled': _vm.hasValidateErrors
     },
     attrs: {
       "type": "button"
     },
     on: {
-      "click": _vm.validateAddForm
+      "click": _vm.validate
     },
     slot: "footer"
   }, [_c('i', {
@@ -51896,7 +51852,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "type": "button",
       "data-toggle": "modal",
-      "data-target": "#addAudienceModal"
+      "data-target": "#addModal"
     }
   }, [_c('i', {
     staticClass: "fa fa-fw fa-plus"
@@ -52214,6 +52170,52 @@ module.exports = function listToStyles (parentId, list) {
 __webpack_require__(40);
 module.exports = __webpack_require__(42);
 
+
+/***/ }),
+/* 109 */,
+/* 110 */,
+/* 111 */,
+/* 112 */,
+/* 113 */,
+/* 114 */,
+/* 115 */,
+/* 116 */,
+/* 117 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony default export */ __webpack_exports__["default"] = {
+	mounted: function mounted() {
+		this.provider = this.$resource(this.resource_url);
+		this.load();
+	},
+	data: function data() {
+		return {
+			resource_url: "",
+			list: { data: [] }
+		};
+	},
+
+	filters: {
+		uppercase: function uppercase(value) {
+			if (!value) return '';
+			value = value.toString();
+			return value.toUpperCase();
+		}
+	},
+	methods: {
+		load: function load() {
+			var _this = this;
+
+			this.$parent.$emit("SHOW_PRELOADER");
+			this.provider.get().then(function (response) {
+				_this.list = response.body;
+				_this.$parent.$emit("HIDE_PRELOADER");
+			});
+		}
+	}
+};
 
 /***/ })
 /******/ ]);

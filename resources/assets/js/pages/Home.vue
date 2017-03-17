@@ -24,7 +24,7 @@
                               </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="item in list">
+                            <tr v-for="item in list.data">
                                 <td>{{item.partner.abbr|uppercase}}</td>
                                 <td>{{item.campaign.abbr|uppercase}}</td>
                                 <td>{{item.audience.abbr|uppercase}}</td>
@@ -52,36 +52,20 @@
 </template>
 
 <script>
+  var list_mix = require('../mixins/list.js').default;
     export default {
-      
+      mixins: [list_mix],
         created() {
+          this.resource_url="ajax/deliveries{/id}";
           
-          this.provider = this.$resource("ajax/deliveries{/id}");
-          this.load();
        },
 
         data: function() {
             return {
-                list: [],
                 toDelete: null,
             }
         },
-        filters:{
-            uppercase:function(value){
-                if (!value) return '';
-                value = value.toString();
-                return value.toUpperCase();
-            }
-        },
-        methods:{
-             load() {
-                this.$parent.$emit("SHOW_PRELOADER");
-                this.provider.get().then(response => {
-                    this.list = response.body.data;
-                    this.$parent.$emit("HIDE_PRELOADER");
-                });
-            }, 
-          
-        }
+        
+        
     }
 </script>
