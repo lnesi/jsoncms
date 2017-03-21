@@ -8316,3 +8316,11 @@ button.close {
     display: none !important;
   }
 }
+
+.alert {
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  opacity: 0.75;
+  margin-top: 5px;
+}

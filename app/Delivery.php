@@ -11,7 +11,7 @@ class Delivery extends Model
     use SoftDeletes;
     protected $table = 'deliveries';
     protected $dates = ['deleted_at','created_at','updated_at','published_at'];
-    protected $fillable=['name'];
+    protected $fillable=['name','partner_id','campaign_id','audience_id','country_id','language_id','region_id','size_id','type_id'];
     protected $with=['status','type','partner','campaign','country','region','language','size','audience'];
     protected $hidden=['partner_id','country_id','region_id','language_id','size_id','audience_id','status_id','type_id','campaign_id'];
     public static function boot(){

@@ -38,6 +38,7 @@ const EditCampaign = require('./pages/EditCampaign.vue');
 const Regions = require('./pages/Regions.vue');
 const EditRegion = require('./pages/EditRegion.vue');
 const NewDelivery = require('./pages/NewDelivery.vue');
+const EditDelivery = require('./pages/EditDelivery.vue');
 
 const Error400 = require('./pages/Error400.vue');
 const Error404 = require('./pages/Error404.vue');
@@ -54,6 +55,7 @@ const routeList = [
   { path: '/regions', component: Regions },
   { path: '/regions/:id', component: EditRegion },
   { path: '/delivery/new', component: NewDelivery },
+  { path: '/deliveries/:id', component: EditDelivery },
   { path: '/400', component: Error400 },
   { path: '*', component: Error404 }
 ]
@@ -87,7 +89,7 @@ window.app = new Vue({
     },
     mounted(){
     	console.log("APP INIT");
-
+     
       this.$router.beforeEach((to, from, next) => {
   		  this.$emit("SHOW_PRELOADER");
   		  next();

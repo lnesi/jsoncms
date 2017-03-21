@@ -1,11 +1,25 @@
 <template>
   <div :class="{'form-group': true, 'has-error': errors.has(this.name) }">
     <label :for="id" class="control-label"><slot></slot></label>
-    <input v-model="inputmodel" type="text" :name="name" class="form-control" :id="id" @blur="validate" :placeholder="placeholder" >
+    <div class="tbvue_input_holder">
+      <input v-model="inputmodel" type="text" :name="name" class="form-control" :id="id" @blur="validate" :placeholder="placeholder" >
+      <i class="fa fa-fw fa-exclamation-triangle text-danger" v-show="errors.has(this.name) " ></i>
+    </div>
     <p class="help-block">{{ errors.first(this.name) }}</p>
   </div>
 </template>
-
+<style lang="scss">
+    .tbvue_input_holder{
+        position:relative;
+        i{
+            position: absolute;
+            top: 0.34em;
+            right: 1em;
+            font-size: 1.5em;
+            opacity: 0.5;
+        }
+    }
+</style>
 <script>
     export default {
       validator: null,
