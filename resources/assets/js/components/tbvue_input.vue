@@ -47,7 +47,7 @@
             //     // success
             // }).catch(() => {
             //     // failed
-            // });;
+            // });
             this.$emit('input', value);
             
           },
@@ -59,7 +59,7 @@
        
        methods:{
           validate(){
-            this.validator.validate(this.name, this.value).then(() => {
+            this.validator.validate(this.name, this.inputmodel).then(() => {
                 // success
             }).catch(() => {
                 // failed
