@@ -34,7 +34,8 @@
                               <tbvue-ajax-dropdown data-url="ajax/sizes?paginate=false" name="size_id" rules="required" id="size_id" v-model="delivery.size_id">Delivery Size</tbvue-ajax-dropdown>
                             </div>
                           </div>
-                          <hr>
+                          <br>
+                          <app-customseditor></app-customseditor>
                      
                     </div>
                     <div class="panel-footer">

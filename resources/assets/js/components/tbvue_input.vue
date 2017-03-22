@@ -43,11 +43,11 @@
        watch:{
           inputmodel(value){
         
-            this.validator.validate(this.name, value).then(() => {
-                // success
-            }).catch(() => {
-                // failed
-            });;
+            // this.validator.validate(this.name, value).then(() => {
+            //     // success
+            // }).catch(() => {
+            //     // failed
+            // });;
             this.$emit('input', value);
             
           },

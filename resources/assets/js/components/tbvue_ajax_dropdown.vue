@@ -3,7 +3,7 @@
         <label :for="id" class="control-label"><slot></slot></label>
         <div class="tbvue_dropdown_holder">
         <select class="form-control"   :name="name"  :id="id" v-model="inputmodel" @blur="validate">
-            <option value="">Select...</option>
+            <option value="">{{label}}</option>
             <option v-for="item in list" :value="item.id" >{{item.name}}</option>
         </select>
         <i class="fa fa-spinner fa-pulse fa-fw" v-show="loading"></i>
@@ -51,7 +51,8 @@
                 inputmodel: '',
                 errors: null,
                 list: [],
-                loading:false
+                loading:false,
+                label:"Loading..."
             }
         },
 
@@ -82,12 +83,15 @@
         methods: {
             load() {
                 this.loading=true;
+                this.label="Loading...";
                 this.$http.get(this.dataUrl).then(response => {
                     this.list = response.body;
                     this.inputmodel = this.value;
                     this.loading=false;
+                    this.label="Select...";
                 }, response => {
                     // error callback
+                    this.label="Error...";
                     this.loading=false;
                 });
             },

@@ -25,6 +25,8 @@ Vue.component('mainnav', require('./components/MainNav.vue'));
 Vue.component('tbvue-ajax-dropdown', require('./components/tbvue_ajax_dropdown.vue'));
 Vue.component('tbvue-input', require('./components/tbvue_input.vue'));
 
+Vue.component('app-customseditor', require('./components/AppCustomsEditor.vue'));
+Vue.component('app-customtypeselector', require('./components/AppCustomTypeSelector.vue'));
 
 
 
@@ -74,7 +76,7 @@ Vue.http.interceptors.push((request, next) => {
 
 window.app = new Vue({
     el: '#app',
-    component:["modal","alert","confirm","preloader","mainnav","tbvue-ajax-dropdown","tbvue-input"],
+    component:["modal","alert","confirm","preloader","mainnav","tbvue-ajax-dropdown","tbvue-input","app-customseditor"],
     router:router,
     data(){
       return {
