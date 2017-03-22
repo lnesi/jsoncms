@@ -21,10 +21,10 @@ export default {
 		
 
 		load() {
-            this.$parent.$emit("SHOW_PRELOADER");
+            this.$root.$emit("SHOW_PRELOADER");
             this.provider.get().then(response => {
                 this.list = response.body;
-                this.$parent.$emit("HIDE_PRELOADER");
+                this.$root.$emit("HIDE_PRELOADER");
             });
         },
 

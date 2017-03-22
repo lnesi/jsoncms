@@ -7,19 +7,19 @@ export default {
 
  	methods:{
  		load(id){
-          this.$parent.$emit("SHOW_PRELOADER");
+          this.$root.$emit("SHOW_PRELOADER");
           this.provider.get({id:id}).then(response=>{
-              this.$parent.$emit("HIDE_PRELOADER");
+              this.$root.$emit("HIDE_PRELOADER");
               this.item=response.body;    
           },response=>{
               this.$router.push('/400');
           });
       },
       save(){
-          this.$parent.$emit("SHOW_PRELOADER");
+          this.$root.$emit("SHOW_PRELOADER");
           this.provider.update({id:this.item.id},this.item).then(response=>{
-              this.$parent.$emit("HIDE_PRELOADER");
-              this.$parent.$emit("ALERT","Ok!","The "+this.singular+" has been updated successfully","success",3);
+              this.$root.$emit("HIDE_PRELOADER");
+              this.$root.$emit("ALERT","Ok!","The "+this.singular+" has been updated successfully","success",3);
           });
       },
       validateForm(){

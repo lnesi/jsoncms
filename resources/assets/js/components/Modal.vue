@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade" tabindex="-1" role="dialog" >
+    <div class="modal fade" tabindex="-1" role="dialog" :id="id">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -18,8 +18,16 @@
 
 <script>
     export default {
-        mounted() {
-            
+     
+        props:['id'],
+        methods:{
+          show(){
+             $("#"+this.id).modal("show");
+           },
+           hide(){
+             $("#"+this.id).modal("hide");
+           }
         }
+        
     }
 </script>

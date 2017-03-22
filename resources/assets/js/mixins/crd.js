@@ -43,10 +43,10 @@ export default {
        
 
         delete(id) {
-            this.$parent.$emit("SHOW_PRELOADER");
+            this.$root.$emit("SHOW_PRELOADER");
             this.provider.delete({ id: id }).then(response => {
-                this.$parent.$emit("HIDE_PRELOADER");
-                this.$parent.$emit("ALERT", "Ok!", "The " + this.singular + " has been deleted successfully", "warning", 3);
+                this.$root.$emit("HIDE_PRELOADER");
+                this.$root.$emit("ALERT", "Ok!", "The " + this.singular + " has been deleted successfully", "warning", 3);
                 this.load();
             }, response => {
                 console.log("errorDeleting");
@@ -54,11 +54,11 @@ export default {
         },
 
         add() {
-            this.$parent.$emit("SHOW_PRELOADER");
+            this.$root.$emit("SHOW_PRELOADER");
             this.provider.save(this.addObject).then(response => {
-                this.$parent.$emit("HIDE_PRELOADER");
+                this.$root.$emit("HIDE_PRELOADER");
                 this.load();
-                this.$parent.$emit("ALERT", "Ok!", "The " + this.singular + " has been created successfully", "success", 3);
+                this.$root.$emit("ALERT", "Ok!", "The " + this.singular + " has been created successfully", "success", 3);
             }, response => {
                 console.log("errorAdding");
             });
@@ -66,7 +66,7 @@ export default {
 
         trash(item) {
             this.toDelete = item;
-            this.$parent.$emit("CONFIRM", "Attention!", "Are you sure you want to delete the " + this.singular + ": <strong>" + item.name + "</strong>?", this, "OK_TO_DELETE");
+            this.$root.$emit("CONFIRM", "Attention!", "Are you sure you want to delete the " + this.singular + ": <strong>" + item.name + "</strong>?", this, "OK_TO_DELETE");
         },
 
         validate() {

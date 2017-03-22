@@ -57,7 +57,12 @@
       mixins: [list_mix],
         created() {
           this.resource_url="ajax/deliveries{/id}";
-          
+          this.$on("OK_TO_DELETE",function(){
+            if(this.toDelete!=null){
+              this.delete(this.toDelete.id);
+              this.toDelete=null;  
+            }
+          }.bind(this));
        },
 
         data: function() {
@@ -65,6 +70,22 @@
                 toDelete: null,
             }
         },
+        methods:{
+          trash(item){
+            this.toDelete=item;
+            this.$root.$emit("CONFIRM","Attention!","Are you sure you want to delete the delivery: <strong>"+item.name+"</strong>?<br> The delivery will become unavailable after delete.",this,"OK_TO_DELETE");
+          },
+          delete(id){
+            this.$root.$emit("SHOW_PRELOADER");
+            this.provider.delete({ id: id }).then(response => {
+                this.$root.$emit("HIDE_PRELOADER");
+                this.$root.$emit("ALERT", "Ok!", "The Delivery has been deleted successfully", "warning", 3);
+                this.load();
+            }, response => {
+                console.log("errorDeleting");
+            });
+          }
+        }
         
         
     }

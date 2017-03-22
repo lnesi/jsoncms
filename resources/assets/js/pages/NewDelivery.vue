@@ -35,7 +35,7 @@
                             </div>
                           </div>
                           <br>
-                          <app-customseditor></app-customseditor>
+                         
                      
                     </div>
                     <div class="panel-footer">
@@ -107,7 +107,7 @@
 
                     this.$http.post('/ajax/deliveries', this.delivery).then(response => {
                         this.$parent.$emit("ALERT", "Ok!", "The Delivery has been created successfully", "success", 3);
-                        this.$parent.$router.push('/');
+                        this.$parent.$router.push('/deliveries/'+response.body.id);
                     }, response => {
                         console.log("error", response);
                         this.$parent.$emit("ALERT", "Error!", "Internal server error", "danger", 3);

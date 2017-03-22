@@ -2,65 +2,126 @@
 	<div>
 		<div class="panel panel-default" id="custom_fileds_panel">
 		    <div class="panel-heading">
-		        <h3 class="panel-title"> 
-		        	
-		        	Dynamic Content Form Builder
-		        
-		        	</h3>
+		        <h3 class="panel-title">Dynamic Content Form Builder</h3>
 		    </div>
 		     <div class="panel-body " id="custom_fileds_panel_body">
-				 <p><button type="button" class="btn btn-default" data-toggle="modal" data-target="#addFieldModal"><i class="fa fa-fw fa-plus" ></i>Add</button></p>
-				 <table id="custom_fileds_list" class="table table-bordered table-striped ">
-		         		<thead>
-		         		<tr>
-		         			<th>Description</th>
-		         			<th>Key</th>
-		         			<th>Type</th>
-		         			<th>Delete</th>
-		         			<th>Sort</th>
-		         		</tr>
-						</thead>
-						<tbody>
-		         			<tr v-show="list.length==0">
+  				 <p><button type="button" class="btn btn-default" @click="add"><i class="fa fa-fw fa-plus" ></i>Add</button></p>
+  				 <table id="custom_fileds_list" class="table table-bordered table-striped ">
+  		        <thead>
+  		         		<tr>
+  		         			<th>Description</th>
+  		         			<th>Key</th>
+  		         			<th>Type</th>
+  		         			<th>Actions</th>
+  		         			<th>Sort</th>
+  		         		</tr>
+  						</thead>
+  						<tbody>
+		         			<tr v-show="hasCustoms">
 		         				<td colspan="5">No results.</td>
 		         			</tr>
-		         		</tbody>
-		         </table>  	
+                  <tr v-for="item in value">
+                    <td>{{item.name}}</td>
+                    <td>{{item.key}}</td>
+                    <td>{{item.component.name}}</td>
+                    <td>
+                      <div class="btn-group btn-group-xs" role="group" aria-label="...">
+                        <button type="button" class="btn btn-default btn-xs" @click="edit(item)"><i class="fa fa-fw fa-edit"></i> Edit</button>
+                        <button type="button" class="btn btn-default btn-xs" @click="remove(item)"><i class="fa fa-fw fa-trash"></i> Remove</button>
+                      </div>
+                    </td>
+                    <td></td>
+                  </tr>  
+  		        </tbody>
+  		    </table>  	
 		     </div>
 		     
 		</div>
-		<modal id="addFieldModal">
-          <h4 class="modal-title" slot="header">Add Field</h4>
-          <form slot="body">
-              <tbvue-input name="name" id="in_name" placeholder="Name" rules="required|max:255" v-model="item.name">Name / Description</tbvue-input>
-			  <tbvue-input name="key" id="in_key" placeholder="Key" rules="required|max:100" v-model="item.key">JSON Key</tbvue-input>
-		      <tbvue-input name="help_text" id="in_help" placeholder="Help Text" rules="max:255" v-model="item.help_text">Help Text</tbvue-input>
-		      <app-customtypeselector></app-customtypeselector>
-          </form>
-          <button type="button" slot="footer" class="btn btn-default"  data-dismiss="modal">Cancel</button>
-          <button type="button" slot="footer" class="btn btn-success" :class="{'btn btn-success': true, 'disabled': hasValidateErrors}" @click="validate"><i class="fa fa-fw fa-floppy-o" ></i> Save</button>
-      </modal>
+		
+      <app-customaddfield :deliveryId="delivery_id" ref="addform"></app-customaddfield>
+      <app-customeditfield  ref="editform"></app-customeditfield>
 	</div>
 </template>
 <script>
   export default {
+  	validator:null,
+  	provider:null,
   	data(){
   		return{
-  			item:{
-
-  			},
-  			list:[]
+  			delivery_id:null,
+  			errors:[],
+        toRemove:null
   		}
+  	},
+    props:['value'], 
+  	created(){
+  		this.provider = this.$resource("ajax/customs{/id}");  	
+      this.$on("OK_TO_REMOVE_FIELD",function(){
+        if(this.toRemove!=null){
+          this.delete(this.toRemove.id);
+          this.toRemove = null;
+        }
+      }.bind(this));
   	},
   	computed: {
         hasValidateErrors() {
+        	this.validator.validateAll(this.item).then(() => {}).catch(() => {});
             return this.errors.count() > 0;
+        },
+        getDeliveryId(){
+        	return this.$parent.$data.delivery.id;
+        },
+        hasCustoms(){
+          if(Array.isArray(this.value)){
+            return this.value.length==0;
+          }else{
+            return true;
+          }
+          
         }
     },
-    methods:{
-    	validate(){
-    		
+    watch:{
+    	value:{
+        	handler: function() {
+              this.delivery_id=this.getDeliveryId;
+          },
+          deep: true
     	}
+    },
+    methods:{
+    	add(){
+         this.$refs.addform.show();
+  		 
+    	},
+    	validate(){
+    		this.validator.validateAll(this.item).then(() => {
+    			this.add();
+    		}).catch(() => {});
+    	},
+      remove(item){
+        this.toRemove=item;
+        
+        this.$root.$emit("CONFIRM", "Attention!", "Are you sure you want to remove the field: <strong>" + item.name + "</strong>?", this, "OK_TO_REMOVE_FIELD");
+      },
+      delete(id){
+        this.$root.$emit("SHOW_PRELOADER");
+        this.provider.delete({ id: id }).then(response => {
+            this.$root.$emit("HIDE_PRELOADER");
+            var newList=this.value.filter(function( obj ) {
+              return obj.id != id;
+            });
+            
+            this.$emit("input",newList);
+            this.$root.$emit("ALERT", "Ok!", "The Field has been deleted successfully", "warning", 3);
+            
+        }, response => {
+            console.log("errorDeleting");
+        });
+      },
+      edit(item){
+        this.$refs.editform.show(item);
+      },
+    	
     }
   }
 </script>

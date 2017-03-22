@@ -61,7 +61,7 @@
           
        },
        mounted(){
-        this.$on('OK_TO_REMOVE_COUNTRY', function() {
+          this.$on('OK_TO_REMOVE_COUNTRY', function() {
                 if (this.toRemove != null) {
                     this.removeCountryApi(this.toRemove.id);
                     this.toRemove = null;

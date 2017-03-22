@@ -12,7 +12,7 @@ class Delivery extends Model
     protected $table = 'deliveries';
     protected $dates = ['deleted_at','created_at','updated_at','published_at'];
     protected $fillable=['name','partner_id','campaign_id','audience_id','country_id','language_id','region_id','size_id','type_id'];
-    protected $with=['status','type','partner','campaign','country','region','language','size','audience'];
+    protected $with=['status','type','partner','campaign','country','region','language','size','audience','customs'];
     protected $hidden=['partner_id','country_id','region_id','language_id','size_id','audience_id','status_id','type_id','campaign_id'];
     public static function boot(){
       parent::boot();
@@ -54,8 +54,9 @@ class Delivery extends Model
     public function language(){
       return $this->belongsTo(Language::class);
     }
+    
     public function customs(){
-        return $this->hasMany(DeliveryCustom::class);
+        return $this->hasMany(DeliveryCustom::class)->orderBy('sort_index');
     }
 
     public function contentSets(){

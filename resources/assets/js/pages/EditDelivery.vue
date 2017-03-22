@@ -38,7 +38,7 @@
                             </div>
                           </div>
                           <br>
-                          <app-customseditor></app-customseditor>
+                          <app-customseditor v-model="delivery.customs"></app-customseditor>
                         </div>
                         <div class="panel-footer">
                             <a  class="btn btn-default" href="#/" ><i class="fa fa-fw fa-chevron-left"></i> Cancel</a>
@@ -74,6 +74,7 @@
               errors: null
           }
       },
+     
       created() {
           this.createValidator();
           this.$set(this, 'errors', this.validator.errorBag);
